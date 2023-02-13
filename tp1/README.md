@@ -102,8 +102,4 @@ Testez.
 
 ## Déploiement sur votre VM
 
-Mettez en place un script de déploiement dans GitLab CI.
-
-**&Agrave; tester d'abord, mais pas à pusher sur la forge :** à l'aide de [ce tuto](https://www.baeldung.com/spring-boot-war-tomcat-deploy), modifiez le pom.xml pour que votre projet puisse être packagé dans un fichier `war` que vous déploierez sur le Tomcat de votre VM.
-
-Une fois que cela fonctionne, intégrez cette modification au script `gitlab-ci.yml`, pour que la CI déploie votre projet sur le serveur Tomcat de votre VM.
+Mettez en place un script `.gitlab-ci.yml` similaire à celui que vous avez fait pour M1IF03, pour déployer le fichier war de votre application sur le serveur Tomcat de votre VM. Testez.
