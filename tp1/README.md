@@ -17,11 +17,29 @@ Pour tester, vous utiliserez une collection de requêtes Postman que vous élabo
 
 ### Initialisation du projet
 
-Créez une nouvelle application Spring Boot à l'aide de https://start.spring.io/. Conservez les réglages par défaut pour la version de Spring Boot, le mode de packaging et la version de Java. Ajoutez 2 dépendances : *Spring Web* et *Thymeleaf*.
+Créez une nouvelle application Spring Boot à l'aide de https://start.spring.io/.
 
-Buildez, exécutez et testez cette application (*cf*. cours). Vous devez voir une page d'erreur sur le port 8080 de votre machine locale.
+Conservez les réglages par défaut pour la version de Spring Boot et la version de Java. Modifiez les autres options comme suit :
 
-&Agrave; l'aide du goal `mvn package`, créez un jar de votre application. Lancez le jar sur votre machine locale et testez que le serveur se lance.
+- type de projet : Maven
+- méthode de packaging : war
+- métadonnées :
+  - Group : fr.univlyon1.m1if.m1if13-2023
+  - Artifact = Name : users
+
+Ajoutez 2 dépendances : *Spring Web* et *Thymeleaf*.
+
+Buildez, exécutez et testez cette application (*cf*. cours).
+
+Vous devez voir une page d'erreur sur le port 8080 de votre machine locale : c'est une bonne nouvelle !<br>Cela signifie que Spring est lancé et que le serveur est démarré mais qu'il n'existe pas de page d'accueil pour l'application.
+
+Dans l'élément `build` de votre `pom.xml`, rajoutez la ligne suivante :
+
+`<finalName>${artifactId}</finalName>`
+
+(cela vous permettra de générer un fichier war avec le nom "simple" de votre application : `users` et de déployer dans Tomcat avec ce nom de contexte).
+
+&Agrave; l'aide du goal `mvn package`, créez un war de votre application. Vérifiez son existence dans le répertoire `target`. Vous pouvez également le déployer sur votre serveur Tomcat, mais vous ne verrez pas grand chose pour l'instant, puisque votre application ne contient aucune ressource. 
 
 ## Conception de l'application
 
