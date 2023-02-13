@@ -42,9 +42,9 @@ Nous vous affecterons ensuite un ID de binôme de la forme `grXX`, et une VM don
 
 Plusieurs channels ont été créés ou le seront en fonction des besoins :
 
-- [général](https://go.rocket.chat/invite?host=chat-info.univ-lyon1.fr&path=invite%2FjqdPdB)
-- [TP](https://go.rocket.chat/invite?host=chat-info.univ-lyon1.fr&path=invite%2F5k69H3)
-- temporaires...
+- [général](https://go.rocket.chat/invite?host=chat-info.univ-lyon1.fr&path=invite%2FuumGh3)
+- [TP](https://go.rocket.chat/invite?host=chat-info.univ-lyon1.fr&path=invite%2FfDgQTY)
+- [Foire aux binômes](https://go.rocket.chat/invite?host=chat-info.univ-lyon1.fr&path=invite%2F3vDniy)
 
 ### Projet forge
 
