@@ -61,17 +61,7 @@ En vous inspirant de [ce tutoriel](https://www.baeldung.com/java-dao-pattern), c
 
 <!--Pour facilier la correction, il vous est demandé de respecter l'interface du DAO qui vous est donnée.-->
 
-### Contrôleur Web MVC
-
-Dans cette partie, vous réutiliserez votre travail sur la création et la vérification de tokens JWT du TP4 de M1IF03. En fallback, vous placerez une chaîne de caractères avec le login de l'utilisateur dans le header authentification.
-
-Réalisez un contrôleur Spring annoté. Pour vous faciliter la tâche, les prototypes des méthodes `login()` et `authenticate()` sont donnés. &Agrave; vous de les implémenter.
-
-Créez également une méthode `logout()` sur le même modèle.
-
-Testez.
-
-### REST
+### REST controller
 
 En vous inspirant de [ce tuto](https://spring.io/guides/gs/rest-service/), mettez en place un contrôleur REST qui permet d'accéder à un utilisateur. Ce contrôleur fera appel au bean défini à la question précédente pour accéder à la liste des utilisateurs.
 
@@ -84,6 +74,16 @@ Une fois la méthode GET réalisée, améliorez-le pour qu'il permette les opér
 - DELETE "/users/{login}" -> Suppression
 
 On ne s'occupe pas ici du contrôle des autorisations d'accès à ce contrôleur.
+
+Testez (par exemple, avec Postman).
+
+### Contrôleur Web MVC
+
+Dans cette partie, vous réutiliserez votre travail sur la création et la vérification de tokens JWT du TP4 de M1IF03. En fallback, vous placerez une chaîne de caractères avec le login de l'utilisateur dans le header authentification.
+
+Réalisez un contrôleur Spring annoté. Pour vous faciliter la tâche, les prototypes des méthodes `login()` et `authenticate()` sont donnés. &Agrave; vous de les implémenter.
+
+Créez également une méthode `logout()` sur le même modèle.
 
 Testez.
 
