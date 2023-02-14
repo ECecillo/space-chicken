@@ -29,9 +29,17 @@ Conservez les réglages par défaut pour la version de Spring Boot et la version
 
 Ajoutez 2 dépendances : *Spring Web* et *Thymeleaf*.
 
-Buildez, exécutez et testez cette application (*cf*. cours).
+Générez le projet et sauvegardez-le dans `users`.
+
+#### Lancement avec Maven
+
+Buildez, exécutez et testez cette application (*cf*. cours), à l'aide du goal Maven approprié.
 
 Vous devez voir une page d'erreur sur le port 8080 de votre machine locale : c'est une bonne nouvelle !<br>Cela signifie que Spring est lancé et que le serveur est démarré mais qu'il n'existe pas de page d'accueil pour l'application.
+
+Pour créer une page d'accueil statique, il faut la placer dans le répertoire `src/main/resources/static`.
+
+#### Déploiement dans Tomcat
 
 Dans l'élément `build` de votre `pom.xml`, rajoutez la ligne suivante :
 
@@ -39,7 +47,7 @@ Dans l'élément `build` de votre `pom.xml`, rajoutez la ligne suivante :
 
 (cela vous permettra de générer un fichier war avec le nom "simple" de votre application : `users` et de déployer dans Tomcat avec ce nom de contexte).
 
-&Agrave; l'aide du goal `mvn package`, créez un war de votre application. Vérifiez son existence dans le répertoire `target`. Vous pouvez également le déployer sur votre serveur Tomcat, mais vous ne verrez pas grand chose pour l'instant, puisque votre application ne contient aucune ressource. 
+&Agrave; l'aide du goal `mvn package`, créez un war de votre application. Vérifiez son existence dans le répertoire `target`. Déployez-le sur votre serveur Tomcat local et vérifiez que vous obtenez le même résultat que précédemment. 
 
 ## Conception de l'application
 
