@@ -31,7 +31,7 @@ Ajoutez 2 dépendances : *Spring Web* et *Thymeleaf*.
 
 Générez le projet et sauvegardez-le dans `users`.
 
-#### Lancement avec Maven
+### Lancement avec Maven
 
 Buildez, exécutez et testez cette application (*cf*. cours), à l'aide du goal Maven approprié.
 
@@ -39,7 +39,7 @@ Vous devez voir une page d'erreur sur le port 8080 de votre machine locale : c'e
 
 Pour créer une page d'accueil statique, il faut la placer dans le répertoire `src/main/resources/static`.
 
-#### Déploiement dans Tomcat
+### Déploiement dans Tomcat
 
 Dans l'élément `build` de votre `pom.xml`, rajoutez la ligne suivante :
 
