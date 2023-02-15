@@ -24,7 +24,7 @@ Conservez les réglages par défaut pour la version de Spring Boot et la version
 - type de projet : Maven
 - méthode de packaging : war
 - métadonnées :
-  - Group : fr.univlyon1.m1if.m1if13-2023
+  - Group : fr.univlyon1.m1if.m1if13
   - Artifact = Name : users
 
 Ajoutez 2 dépendances : *Spring Web* et *Thymeleaf*.
