@@ -51,7 +51,7 @@ Pour tester, vous pouvez utiliser un client installé sur votre machine (par exe
 
 ## Instructions de rendu
 
-Les TPs 1 et 2 sont à rendre pour le **dimanche 5 mars 2023 à 23h59**.
+Les TPs 1 et 2 sont à rendre pour le **dimanche 12 mars 2023 à 23h59**.
 
 Votre dépôt de code doit comporter les éléments suivants :
 - un répertoire `users` à la racine, contenant le code de la partie Spring Boot
