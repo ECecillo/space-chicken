@@ -91,7 +91,8 @@ Pour que vous n'ayez plus ce problème, vous allez configurer Tomcat avec le mê
 
 - sauvegarder l'ancien keystore (au cas où) : `sudo mv /opt/tomcat/conf/.keystore /opt/tomcat/conf/.keystore.backup`
 - utiliser openssl pour générer un nouveau keystore à partir du matériel cryptographique spécifique à votre VM :<br>
-`sudo /usr/local/ssl/bin/openssl pkcs12 -export -in /etc/ssl/certs/server.cert -inkey /etc/ssl/certs/server.key -out ./.keystore -name 192.18.75.XXX -CAfile /etc/ssl/certs/server-chain.cert -caname m1if-ca -chain`
+`sudo /usr/local/ssl/bin/openssl pkcs12 -export -in /etc/ssl/certs/server.cert -inkey /etc/ssl/certs/server.key -out ./.keystore -name 192.18.75.XXX -CAfile /etc/ssl/certs/server-chain.cert -caname m1if-ca -chain`<br>
+Remarque : il vous sera demandé un password que Tomcat devra connaître pour s'y connecter ; vous pouvez soit remettre celui qui est déjà dans le fichier `/opt/tomcat/conf/server.xml`, soit en choisir un autre et modifier ce fichier pour le mettre à jour.
 - modifier les propriétaires du nouveau fichier pour que Tomcat puisse y accéder : `sudo chown tomcat:tomcat .keystore`
 - redémarrer le service tomcat
 
