@@ -15,12 +15,12 @@ public class UserDto {
   }
 
   /**
-   * @param login    Le login de l'utilisateur (peut se trouver dans un paramètre
-   *                 ou dans l'URL)
-   * @param password Le password (dans un paramètre)
-   * @param name     Le nom (dans un paramètre)
+   * @param login User's login (in param or in URL).
+   * @param password User's password.
+   * @param species User's species.
+   * @param image User's image.
    */
-  public UserDto(String login, String password, Species species, String image) {
+  public UserDto(final String login, final String password, final Species species, final String image) {
     this.login = login;
     this.password = password;
     this.species = species;
@@ -28,59 +28,71 @@ public class UserDto {
   }
 
   /**
-   * @param login Le login de l'utilisateur présent dans la requête
+   * @param login Set User's login in request.
    */
-  public void setLogin(String login) {
+  public void setLogin(final String login) {
     this.login = login;
   }
 
   /**
-   * @param password Le password de l'utilisateur présent dans la requête
+   * @param password Set User's password in request.
    */
-  public void setPassword(String password) {
+  public void setPassword(final String password) {
     this.password = password;
   }
 
   /**
-   * @param name Le nom de l'utilisateur présent dans la requête
+   * @param species Set User's species in request.
    */
-  public void setSpecies(Species species) {
+  public void setSpecies(final Species species) {
     this.species = species;
   }
 
-  public void setConnected(boolean connected) {
+  /**
+   * @param connected Set User's connected in request.
+   */
+  public void setConnected(final boolean connected) {
     this.connected = connected;
   }
 
-  public void setImage(String image) {
+  /**
+   * @param image Set User's image in request.
+   */
+  public void setImage(final String image) {
     this.image = image;
   }
 
   /**
-   * @return Le login de l'utilisateur passé dans la requête
+   * @return User's login in request.
    */
   public String getLogin() {
     return login;
   }
 
   /**
-   * @return Le password de l'utilisateur passé dans la requête
+   * @return User's password in request.
    */
   public String getPassword() {
     return password;
   }
 
   /**
-   * @return L'espère de l'utilisateur passé dans la requête
+   * @return User's species in request.
    */
   public Species getSpecies() {
     return species;
   }
 
+    /**
+     * @return User's connected in request.
+     */
   public Boolean getConnected() {
     return connected;
   }
 
+    /**
+     * @return User's image in request.
+     */
   public String getImage() {
     return image;
   }
