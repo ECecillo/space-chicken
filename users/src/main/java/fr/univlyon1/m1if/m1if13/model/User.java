@@ -9,20 +9,20 @@ public class User {
     private boolean connected = false;
     private String image;
 
-    public User(String login, Species species, String password) {
+    public User(final String login, final Species species, final String password) {
         this.login = login;
         this.species = species;
         this.password = password;
     }
 
-    public User(String login, Species species, String password, String image) {
+    public User(final String login, final Species species, final String password, final String image) {
         this.login = login;
         this.species = species;
         this.password = password;
         this.image = image != null ? image : "";
     }
 
-    // Obligé pour que Jackson puisse fonctionner correctement.
+    // Had to for Jackson.
     public User() {
         this.login = "";
         this.species = Species.POULE;
@@ -38,7 +38,7 @@ public class User {
         return species;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -46,9 +46,9 @@ public class User {
         return this.connected;
     }
 
-    public void authenticate(String password) throws AuthenticationException {
+    public void authenticate(final String password) throws AuthenticationException {
         if (!password.equals(this.password)) {
-            throw new AuthenticationException("Erroneous password");
+            throw new AuthenticationException("Error wrong password");
         }
         this.connected = true;
     }
@@ -61,7 +61,7 @@ public class User {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(final String image) {
         this.image = image;
     }
 }
