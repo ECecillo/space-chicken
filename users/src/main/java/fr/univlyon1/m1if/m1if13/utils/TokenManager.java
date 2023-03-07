@@ -21,7 +21,7 @@ import java.util.Date;
 @Component
 public final class TokenManager {
     private static final String SECRET = "monsecret2023";
-    private static final String ISSUER = "SpaceChicken M1IF03";
+    private static final String ISSUER = "SpaceChicken M1IF13";
     private static final long LIFETIME = 1800000; // Durée de vie d'un token : 30 minutes ;
     private static final Algorithm ALGORITHM = Algorithm.HMAC256(SECRET);
 
@@ -70,10 +70,11 @@ public final class TokenManager {
      * @return le token signé
      * @throws JWTCreationException si les paramètres ne permettent pas de créer un token
      */
-    public String generateToken(final String subject) throws JWTCreationException {
+    public String generateToken(final String subject, final String origin) throws JWTCreationException {
         return JWT.create()
                 .withIssuer(ISSUER)
                 .withSubject(subject)
+                .withAudience(origin)
                 .withExpiresAt(new Date(new Date().getTime() + LIFETIME))
                 .sign(ALGORITHM);
     }

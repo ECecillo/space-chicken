@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,15 +27,18 @@ public class UsersOperationsController {
   @Autowired
   private UserServiceImpl userService;
 
+  @CrossOrigin(origins = {"http://localhost:8080", "http://192.168.75.14", "https://192.168.75.14"},
+          exposedHeaders = "Authorization")
   @PostMapping(path = "/login", consumes = {
       MediaType.APPLICATION_JSON_VALUE,
       MediaType.APPLICATION_XML_VALUE })
   public ResponseEntity<Void> login(
           final @RequestBody UserDto user,
           final @RequestHeader("Origin") String origin) throws AuthenticationException {
-    return loginHandler(user);
+    return loginHandler(user, origin);
   }
 
+  @CrossOrigin(origins = {"http://localhost:8080", "http://192.168.75.14", "https://192.168.75.14"})
   @PostMapping(path = "/logout", consumes = {
       MediaType.APPLICATION_JSON_VALUE,
       MediaType.APPLICATION_XML_VALUE })
@@ -44,14 +48,16 @@ public class UsersOperationsController {
     return logoutHandler(user, origin);
   }
 
+  @CrossOrigin(origins = {"http://localhost:8080", "http://192.168.75.14", "https://192.168.75.14"})
   @PostMapping(path = "/login", consumes = {
       MediaType.APPLICATION_FORM_URLENCODED_VALUE })
   public ResponseEntity<Void> loginForm(
           final @ModelAttribute("UserFormLoginData") UserDto user,
           final @RequestHeader("Origin") String origin) throws AuthenticationException {
-    return loginHandler(user);
+    return loginHandler(user, origin);
   }
 
+  @CrossOrigin(origins = {"http://localhost:8080", "http://192.168.75.14", "https://192.168.75.14"})
   @PostMapping(path = "/logout", consumes = {
       MediaType.APPLICATION_FORM_URLENCODED_VALUE
   })
@@ -77,9 +83,9 @@ public class UsersOperationsController {
     }
   }
 
-  private ResponseEntity<Void> loginHandler(final UserDto user) {
+  private ResponseEntity<Void> loginHandler(final UserDto user, String origin) {
     try {
-      final String token = userService.login(user);
+      final String token = userService.login(user, origin);
       return ResponseEntity.noContent().header("Authorization", token).build();
     } catch (AuthenticationException e) {
       throw new ResponseStatusException(
