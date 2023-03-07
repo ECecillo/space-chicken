@@ -37,14 +37,14 @@ public class UserServiceImpl implements UserServiceInterface {
   }
 
   @Override
-  public String login(final UserDto user) throws UserNotFoundException, AuthenticationException {
+  public String login(final UserDto user, final String origin) throws UserNotFoundException, AuthenticationException {
     final String login = user.getLogin();
     final String password = user.getPassword();
     Optional<User> optionalUser = userDao.get(login);
 
     if (optionalUser.isPresent()) {
       optionalUser.get().authenticate(password);
-      String token = tokenManager.generateToken(login);
+      String token = tokenManager.generateToken(login, origin);
       return "Bearer " + token;
     }
     throw new UserNotFoundException();
