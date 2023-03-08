@@ -7,35 +7,35 @@ import javax.naming.NameAlreadyBoundException;
 
 public interface Dao<T> {
     /**
-     * Récupère un utilisateur enregistré
-     * @param id Login de l'utilisateur
-     * @return Un java.util.Optional qui contient (ou pas) l'utilisateur
+     * Get a regestered user.
+     * @param id User's login.
+     * @return java.util.Optional of the user (empty if not found).
      */
     Optional<T> get(String id);
 
     /**
-     * Récupère tous les utilisateurs enregistrés
-     * @return Un Set de login
+     * Get all registered users.
+     * @return set of all registered user's logins.
      */
     Set<String> getAll();
 
     /**
-     * Crée un utilisateur et le sauvegarde
-     * @param t L'utilisateur à créer
+     * Create a new user and register it.
+     * @param t user to register.
      * @throws NameAlreadyBoundException
      */
     void save(T t) throws NameAlreadyBoundException;
 
     /**
-     * Modifie un utilisateur enregistré
-     * @param t L'utilisateur à modifier
-     * @param params Un tableau de 2 Strings : login et password
+     * Modify a registered user.
+     * @param t User to modify.
+     * @param params Array of 2 Strings : login and password
      */
     void update(T t, String[] params);
 
     /**
-     * Supprime un utilisateur enregistré
-     * @param t L'utilisateur à supprimer
+     * Delete a registered user.
+     * @param t User to delete.
      */
     void delete(T t);
 }
