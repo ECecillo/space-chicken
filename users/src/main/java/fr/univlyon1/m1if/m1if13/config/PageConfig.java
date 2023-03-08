@@ -10,15 +10,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class PageConfig implements WebMvcConfigurer {
 
   @Override
-  public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
+  public void configureContentNegotiation(final ContentNegotiationConfigurer configurer) {
     configurer.defaultContentType(MediaType.APPLICATION_JSON)
         .mediaType("json", MediaType.APPLICATION_JSON)
-        .mediaType("xml", MediaType.APPLICATION_XML)
-        .mediaType("html", MediaType.TEXT_HTML);
+        .mediaType("xml", MediaType.APPLICATION_XML);
   }
 
   @Override
-  public void addViewControllers(ViewControllerRegistry registry) {
+  public void addViewControllers(final ViewControllerRegistry registry) {
     registry.addViewController("/home").setViewName("home");
     registry.addViewController("/").setViewName("login");
     registry.addViewController("/login").setViewName("login");
