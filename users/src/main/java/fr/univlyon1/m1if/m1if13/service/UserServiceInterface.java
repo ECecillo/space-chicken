@@ -1,5 +1,7 @@
 package fr.univlyon1.m1if.m1if13.service;
 
+import java.util.Set;
+
 import javax.naming.AuthenticationException;
 import javax.naming.NameAlreadyBoundException;
 
@@ -11,6 +13,19 @@ import fr.univlyon1.m1if.m1if13.exeption.UserNotFoundException;
  * Services that handle user requests.
  */
 public interface UserServiceInterface {
+
+  /**
+   * Find and return user informations.
+   *
+   * @param login
+   * @return DTO with all the user informations stored in the DAO.
+   */
+  UserDto getUserByLogin(String login) throws UserNotFoundException;
+
+  /**
+   * @return A list of all the user login stored in the ressource handler.
+   */
+  Set<String> getUsers();
 
   /**
    * Create a new user inside our user DAO.
@@ -40,7 +55,7 @@ public interface UserServiceInterface {
   /**
    * Turn isConnected state to false.
    *
-   * @param user  Mapped user parameters passed in the query.
+   * @param user   Mapped user parameters passed in the query.
    * @param origin The origin of the request (compared
    *               with origin of the client sotred in JWT Token)
    * @throws UserNotFoundException if we could not find the user with the mapped
@@ -51,7 +66,7 @@ public interface UserServiceInterface {
   /**
    * Update the user password.
    *
-   * @param login user login.
+   * @param login   user login.
    * @param userDto Mapped user parameters passed in the query.
    * @throws UserNotFoundException if we could not find the user with the mapped
    *                               payload.
@@ -64,7 +79,8 @@ public interface UserServiceInterface {
    * @param jwt    token.
    * @param origin request origin, for comparison with the origin stored in the
    *               JWT token.
-   * @throws UserNotFoundException if we could not find the user with the mapped object.
+   * @throws UserNotFoundException if we could not find the user with the mapped
+   *                               object.
    * @throws EmptyParamException   if the origin and jwt have not been passed.
    */
   void authenticate(String jwt, String origin) throws UserNotFoundException, EmptyParamException;
