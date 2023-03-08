@@ -1,4 +1,4 @@
-package fr.univlyon1.m1if.m1if13.users;
+package fr.univlyon1.m1if.m1if13.users.unit;
 
 import javax.naming.AuthenticationException;
 
@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.fail;
 
 class UserTest {
-    User jeanette, averell;
+    private User jeanette;
+    private User averell;
 
     @BeforeEach
     void setUp() {
@@ -20,14 +21,14 @@ class UserTest {
 
     @Test
     void getLogin() {
-        assert(jeanette.getLogin().equals("j2045"));
-        assert(averell.getLogin().equals("Averell Dalton"));
+        assert (jeanette.getLogin().equals("j2045"));
+        assert (averell.getLogin().equals("Averell Dalton"));
     }
 
     @Test
     void getSpecies() {
-        assert(jeanette.getSpecies().equals(Species.POULE));
-        assert(averell.getSpecies().equals(Species.COWBOY));
+        assert (jeanette.getSpecies().equals(Species.POULE));
+        assert (averell.getSpecies().equals(Species.COWBOY));
     }
 
     @Test
@@ -35,7 +36,7 @@ class UserTest {
         jeanette.setPassword("codectoutcourt");
         try {
             jeanette.authenticate("codectoutcourt");
-            assert(true);
+            assert (true);
         } catch (AuthenticationException e) {
             fail(e.getMessage());
         }
@@ -45,9 +46,9 @@ class UserTest {
     void isConnected() {
         try {
             jeanette.authenticate("cotcodec");
-            assert(jeanette.isConnected());
+            assert (jeanette.isConnected());
             jeanette.disconnect();
-            assert(!jeanette.isConnected());
+            assert (!jeanette.isConnected());
         } catch (AuthenticationException e) {
             fail(e.getMessage());
         }
@@ -57,7 +58,7 @@ class UserTest {
     void authenticate() {
         try {
             jeanette.authenticate("cotcodec");
-            assert(true);
+            assert (true);
         } catch (AuthenticationException e) {
             fail(e.getMessage());
         }
@@ -66,7 +67,7 @@ class UserTest {
             averell.authenticate("cotcodec");
             fail("Mot de passe incorrect");
         } catch (AuthenticationException e) {
-            assert(true);
+            assert (true);
         }
     }
 
@@ -75,7 +76,7 @@ class UserTest {
         try {
             jeanette.authenticate("cotcodec");
             jeanette.disconnect();
-            assert(!jeanette.isConnected());
+            assert (!jeanette.isConnected());
         } catch (AuthenticationException e) {
             fail(e.getMessage());
         }
