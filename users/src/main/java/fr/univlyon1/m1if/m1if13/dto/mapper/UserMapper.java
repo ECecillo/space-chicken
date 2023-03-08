@@ -14,13 +14,11 @@ public class UserMapper {
   @Autowired
   private ModelMapper modelMapper;
 
-  public UserDto convertToDto(UserDto user) {
-    UserDto userDto = modelMapper.map(user, UserDto.class);
-    return userDto;
+  public UserDto convertToDto(final UserDto user) {
+    return modelMapper.map(user, UserDto.class);
   }
 
-  public User convertToEntity(UserDto userDto) throws ParseException {
-    User user = modelMapper.map(userDto, User.class);
-    return user;
+  public User convertToEntity(final UserDto userDto) throws ParseException {
+    return modelMapper.map(userDto, User.class);
   }
 }
