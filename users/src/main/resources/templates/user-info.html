@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <title>User Information</title>
+  </head>
+  <body>
+    <h1>User Information</h1>
+    <p>Login: <span th:text="${userInfo.login}"></span></p>
+    <p>Password: <span th:text="${userInfo.password}"></span></p>
+    <p>Species: <span th:text="${userInfo.species}"></span></p>
+    <p>Connected: <span th:text="${userInfo.connected}"></span></p>
+  </body>
+</html>
