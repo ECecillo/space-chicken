@@ -171,5 +171,107 @@ class UsersOperationsControllerTest {
                 .andExpect(status().isNotFound()); // 404 HTTP code
     }
 
+    /**
+     * Test CORS for login JSON request format.
+     * Should return 204 HTTP code for correct Origin.
+     * Should return 401 HTTP code for wrong Origin.
+     * @throws Exception
+     */
+    @Test
+    @Order(11)
+    public void testLoginCorsJSON() throws Exception {
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Origin", "http://localhost:8080")// correct origin.
+                        .content("{"
+                                + "\"login\":\"Susan\","
+                                + "\"password\":\"susanPassword\""
+                                + "}"))
+                .andExpect(status().isNoContent()); // 204 HTTP code.
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Origin", "http://wrong:8080")
+                        .content("{"
+                                + "\"login\":\"Susan\","
+                                + "\"password\":\"susanPassword\""
+                                + "}"))
+                .andExpect(status().isForbidden()); // 403 HTTP code.
+    }
 
+    /**
+     * Test CORS for login XML request format.
+     * Should return 204 HTTP code for correct Origin.
+     * Should return 401 HTTP code for wrong Origin.
+     * @throws Exception
+     */
+    @Test
+    @Order(13)
+    public void testLoginCorsXML() throws Exception {
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_XML)
+                        .header("Origin", "http://localhost:8080")// correct origin.
+                        .content("<user>"
+                                + "<login>Susan</login>"
+                                + "<password>susanPassword</password>"
+                                + "</user>"))
+                .andExpect(status().isNoContent()); // 204 HTTP code.
+        mockMvc.perform(post("/login")
+                        .contentType(MediaType.APPLICATION_XML)
+                        .header("Origin", "http://wrong:8080")
+                        .content("<user>"
+                                + "<login>Susan</login>"
+                                + "<password>susanPassword</password>"
+                                + "</user>"))
+                .andExpect(status().isForbidden()); // 403 HTTP code.
+    }
+
+    /**
+     * Test CORS for logout JSON request format.
+     * Should return 204 HTTP code for correct Origin.
+     * Should return 401 HTTP code for wrong Origin.
+     * @throws Exception
+     */
+    @Test
+    @Order(12)
+    public void testLogoutCorsJSON() throws Exception {
+        mockMvc.perform(post("/logout")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Origin", "http://localhost:8080")// correct origin.
+                        .content("{"
+                                + "\"login\":\"Susan\""
+                                + "}"))
+                .andExpect(status().isNoContent()); // 204 HTTP code.
+        mockMvc.perform(post("/logout")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .header("Origin", "http://wrong:8080")
+                        .content("{"
+                                + "\"login\":\"Susan\""
+                                + "}"))
+                .andExpect(status().isForbidden()); // 403 HTTP code.
+    }
+
+    /**
+     * Test CORS for logout XML request format.
+     * Should return 204 HTTP code for correct Origin.
+     * Should return 401 HTTP code for wrong Origin.
+     * @throws Exception
+     */
+    @Test
+    @Order(14)
+    public void testLogoutCorsXML() throws Exception {
+        mockMvc.perform(post("/logout")
+                        .contentType(MediaType.APPLICATION_XML)
+                        .header("Origin", "http://localhost:8080")// correct origin.
+                        .content("<user>"
+                                + "<login>Susan</login>"
+                                + "</user>"))
+                .andExpect(status().isNoContent()); // 204 HTTP code.
+        mockMvc.perform(post("/logout")
+                        .contentType(MediaType.APPLICATION_XML)
+                        .header("Origin", "http://wrong:8080")
+                        .content("<user>"
+                                + "<login>Susan</login>"
+                                + "</user>"))
+                .andExpect(status().isForbidden()); // 403 HTTP code.
+    }
 }
