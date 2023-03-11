@@ -1,6 +1,7 @@
 package fr.univlyon1.m1if.m1if13.service;
 
 import java.util.Optional;
+import java.util.Set;
 
 import javax.naming.AuthenticationException;
 import javax.naming.NameAlreadyBoundException;
@@ -29,6 +30,20 @@ public class UserServiceImpl implements UserServiceInterface {
 
   @Autowired
   private UserMapper userMapper;
+
+  @Override
+  public Set<String> getUsers() {
+    return userDao.getAll();
+  }
+
+  @Override
+  public UserDto getUserByLogin(final String login) throws UserNotFoundException {
+    Optional<User> optionalUser = userDao.get(login);
+    if (optionalUser.isPresent()) {
+      return userMapper.convertToDto(optionalUser.get());
+    }
+    throw new UserNotFoundException();
+  }
 
   @Override
   public void signup(final UserDto user) throws NameAlreadyBoundException {
@@ -71,10 +86,10 @@ public class UserServiceImpl implements UserServiceInterface {
     Optional<User> optionalUser = userDao.get(login);
     if (optionalUser.isPresent()) {
       User user = optionalUser.get();
-      String[] params = {login, userDto.getPassword()};
+      String[] params = {login, userDto.getPassword() };
       userDao.update(user, params);
     } else {
-        throw new UserNotFoundException();
+      throw new UserNotFoundException();
     }
   }
 

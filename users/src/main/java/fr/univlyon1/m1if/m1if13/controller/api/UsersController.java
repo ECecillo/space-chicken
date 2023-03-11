@@ -1,6 +1,5 @@
 package fr.univlyon1.m1if.m1if13.controller.api;
 
-import java.util.Optional;
 import java.util.Set;
 
 import javax.naming.NameAlreadyBoundException;
@@ -10,10 +9,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import fr.univlyon1.m1if.m1if13.dto.mapper.UserMapper;
 import fr.univlyon1.m1if.m1if13.dto.model.user.UserDto;
 import fr.univlyon1.m1if.m1if13.exeption.UserNotFoundException;
 import fr.univlyon1.m1if.m1if13.model.User;
-import fr.univlyon1.m1if.m1if13.repository.dao.UserDao;
 import fr.univlyon1.m1if.m1if13.service.UserServiceImpl;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RestController
 public class UsersController {
   @Autowired
-  private UserDao userDao;
+  private UserMapper userMapper;
 
   @Autowired
   private UserServiceImpl userService;
@@ -44,8 +43,8 @@ public class UsersController {
       MediaType.APPLICATION_JSON_VALUE,
       MediaType.APPLICATION_XML_VALUE })
   public ResponseEntity<?> updateUserPassword(
-          final @PathVariable String login,
-          final @RequestBody UserDto userDto) {
+      final @PathVariable String login,
+      final @RequestBody UserDto userDto) {
     return passwordUpdateHandler(login, userDto);
   }
 
@@ -58,24 +57,22 @@ public class UsersController {
   @PutMapping(path = "/users/{login}", consumes = {
       MediaType.APPLICATION_FORM_URLENCODED_VALUE })
   public ResponseEntity<?> updateUserPasswordForm(
-          final @PathVariable String login,
-          final UserDto userDto) {
+      final @PathVariable String login,
+      final UserDto userDto) {
     return passwordUpdateHandler(login, userDto);
   }
 
   @GetMapping(path = "/users")
   public ResponseEntity<Set<String>> getUsers() {
-    Set<String> users = userDao.getAll();
-    return ResponseEntity.ok(users);
+    return ResponseEntity.ok(userService.getUsers());
   }
 
   @CrossOrigin(origins = {"http://localhost:8080", "http://192.168.75.14", "https://192.168.75.14"})
   @GetMapping(path = "/users/{login}")
   public ResponseEntity<User> getUser(final @PathVariable String login) {
-    Optional<User> optionalUser = userDao.get(login);
-    if (optionalUser.isPresent()) {
-      return ResponseEntity.ok(optionalUser.get());
-    } else {
+    try {
+      return ResponseEntity.ok(userMapper.convertToEntity(userService.getUserByLogin(login)));
+    } catch (UserNotFoundException e) {
       throw new ResponseStatusException(
           HttpStatus.NOT_FOUND, "l'utilisateur n'a pas été trouvé");
     }
