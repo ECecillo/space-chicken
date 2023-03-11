@@ -5,7 +5,11 @@ import java.util.Set;
 import javax.naming.AuthenticationException;
 import javax.naming.NameAlreadyBoundException;
 
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserCreateDto;
 import fr.univlyon1.m1if.m1if13.dto.model.user.UserDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserLoginDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserLogoutDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserPasswordDto;
 import fr.univlyon1.m1if.m1if13.exeption.EmptyParamException;
 import fr.univlyon1.m1if.m1if13.exeption.UserNotFoundException;
 
@@ -33,7 +37,7 @@ public interface UserServiceInterface {
    * @param user mapped object with login and password of the user.
    * @throws NameAlreadyBoundException if user already exist.
    */
-  void signup(UserDto user) throws NameAlreadyBoundException;
+  void signup(UserCreateDto user) throws NameAlreadyBoundException;
 
   /**
    * Procedure for login a user.
@@ -50,18 +54,18 @@ public interface UserServiceInterface {
    *         401 unauthorized,
    *         404 not found
    */
-  String login(UserDto user, String origin) throws UserNotFoundException, AuthenticationException;
+  String login(UserLoginDto user, String origin) throws UserNotFoundException, AuthenticationException;
 
   /**
    * Turn isConnected state to false.
    *
-   * @param user   Mapped user parameters passed in the query.
+   * @param user   mapped object containing user login
    * @param origin The origin of the request (compared
    *               with origin of the client sotred in JWT Token)
    * @throws UserNotFoundException if we could not find the user with the mapped
    *                               payload.
    */
-  void logout(UserDto user, String origin) throws UserNotFoundException;
+  void logout(UserLogoutDto user, String origin) throws UserNotFoundException;
 
   /**
    * Update the user password.
@@ -71,7 +75,7 @@ public interface UserServiceInterface {
    * @throws UserNotFoundException if we could not find the user with the mapped
    *                               payload.
    */
-  void changePassword(String login, UserDto userDto) throws UserNotFoundException;
+  void changePassword(String login, UserPasswordDto userDto) throws UserNotFoundException;
 
   /**
    * Check if the JWT is valid and correspond to a user in the DAO.

@@ -6,13 +6,17 @@ import java.util.Set;
 import javax.naming.AuthenticationException;
 import javax.naming.NameAlreadyBoundException;
 
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserPasswordDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
 
 import fr.univlyon1.m1if.m1if13.dto.mapper.UserMapper;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserCreateDto;
 import fr.univlyon1.m1if.m1if13.dto.model.user.UserDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserLoginDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserLogoutDto;
 import fr.univlyon1.m1if.m1if13.exeption.EmptyParamException;
 import fr.univlyon1.m1if.m1if13.exeption.UserNotFoundException;
 import fr.univlyon1.m1if.m1if13.model.User;
@@ -46,13 +50,18 @@ public class UserServiceImpl implements UserServiceInterface {
   }
 
   @Override
-  public void signup(final UserDto user) throws NameAlreadyBoundException {
-    User newUser = userMapper.convertToEntity(user);
+  public void signup(final UserCreateDto user) throws NameAlreadyBoundException {
+    User newUser = new User(
+      user.getLogin(),
+      user.getPassword(),
+      user.getSpecies(),
+      user.getImage());
     userDao.save(newUser);
   }
 
   @Override
-  public String login(final UserDto user, final String origin) throws UserNotFoundException, AuthenticationException {
+  public String login(final UserLoginDto user, final String origin)
+    throws UserNotFoundException, AuthenticationException {
     final String login = user.getLogin();
     final String password = user.getPassword();
     Optional<User> optionalUser = userDao.get(login);
@@ -66,8 +75,9 @@ public class UserServiceImpl implements UserServiceInterface {
   }
 
   @Override
-  public void logout(final UserDto user, final String origin) throws UserNotFoundException {
-    final String login = user.getLogin();
+  public void logout(final UserLogoutDto user, final String origin)
+    throws UserNotFoundException {
+    String login = user.getLogin();
     Optional<User> optionalUser = userDao.get(login);
     try {
       if (optionalUser.isPresent()) {
@@ -82,7 +92,7 @@ public class UserServiceImpl implements UserServiceInterface {
   }
 
   @Override
-  public void changePassword(final String login, final UserDto userDto) throws UserNotFoundException {
+  public void changePassword(final String login, final UserPasswordDto userDto) throws UserNotFoundException {
     Optional<User> optionalUser = userDao.get(login);
     if (optionalUser.isPresent()) {
       User user = optionalUser.get();
