@@ -18,9 +18,9 @@ public class UserDao implements Dao<User> {
     private Map<String, User> users = new HashMap<>();
 
     public UserDao() {
-        this.users.put("ECecillo", new User("Enzo", Species.POULE, "root"));
-        this.users.put("John", new User("John", Species.COWBOY, "johnPassword"));
-        this.users.put("Susan", new User("Susan", Species.POULE, "susanPassword"));
+        this.users.put("ECecillo", new User("ECecillo", "root", Species.POULE));
+        this.users.put("John", new User("John", "johnPassword", Species.COWBOY));
+        this.users.put("Susan", new User("Susan", "susanPassword", Species.POULE));
     }
 
     @Override
