@@ -14,7 +14,7 @@ public class UserMapper {
   @Autowired
   private ModelMapper modelMapper;
 
-  public UserDto convertToDto(final UserDto user) {
+  public UserDto convertToDto(final User user) {
     return modelMapper.map(user, UserDto.class);
   }
 
