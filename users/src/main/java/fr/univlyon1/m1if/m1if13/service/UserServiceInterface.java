@@ -35,7 +35,7 @@ public interface UserServiceInterface {
    *         401 unauthorized,
    *         404 not found
    */
-  String login(UserDto user) throws UserNotFoundException, AuthenticationException;
+  String login(UserDto user, String origin) throws UserNotFoundException, AuthenticationException;
 
   /**
    * Turn isConnected state to false.
