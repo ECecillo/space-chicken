@@ -9,28 +9,43 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.fail;
 
+/**
+ * Test class for the User class.
+ */
 class UserTest {
     private User jeanette;
     private User averell;
 
+    /**
+     * Initialize the test class.
+     */
     @BeforeEach
     void setUp() {
-        jeanette = new User("j2045", Species.POULE, "cotcodec");
-        averell = new User("Averell Dalton", Species.COWBOY, "pan");
+        jeanette = new User("j2045", "cotcodec", Species.POULE);
+        averell = new User("Averell Dalton", "pan", Species.COWBOY);
     }
 
+    /**
+     * Test the getLogin method.
+     */
     @Test
     void getLogin() {
         assert (jeanette.getLogin().equals("j2045"));
         assert (averell.getLogin().equals("Averell Dalton"));
     }
 
+    /**
+     * Test the getSpecies method.
+     */
     @Test
     void getSpecies() {
         assert (jeanette.getSpecies().equals(Species.POULE));
         assert (averell.getSpecies().equals(Species.COWBOY));
     }
 
+    /**
+     * Test the getPassword method.
+     */
     @Test
     void setPassword() {
         jeanette.setPassword("codectoutcourt");
@@ -42,6 +57,9 @@ class UserTest {
         }
     }
 
+    /**
+     * Test the isConnected method.
+     */
     @Test
     void isConnected() {
         try {
@@ -54,6 +72,9 @@ class UserTest {
         }
     }
 
+    /**
+     * Test the authenticate method.
+     */
     @Test
     void authenticate() {
         try {
@@ -71,6 +92,9 @@ class UserTest {
         }
     }
 
+    /**
+     * Test the disconnect method.
+     */
     @Test
     void disconnect() {
         try {
