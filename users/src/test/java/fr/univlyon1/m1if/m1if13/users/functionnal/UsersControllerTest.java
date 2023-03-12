@@ -219,4 +219,26 @@ class UsersControllerTest {
                                 + "</user>"))
                 .andExpect(status().isNotFound()); // 404 HTTP code, user not found in XML format.
     }
+
+    /**
+     * Test getUser CORS.
+     * Should return 200 HTTP code without Origin.
+     * Should return 200 HTTP code when Origin is correct.
+     * Should return 403 HTTP code when Origin is incorrect.
+     * @throws Exception when an error occurs.
+     */
+    @Test
+    public void testGetUserCors() throws Exception {
+        mockMvc.perform(get("/users/{name}", "Susan")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk()); // 200 HTTP without Origin.
+        mockMvc.perform(get("/users/{name}", "Susan")
+                        .accept(MediaType.APPLICATION_JSON)
+                .header("Origin", "http://localhost:8080"))
+                .andExpect(status().isOk()); // 200 HTTP code when Origin is correct.
+        mockMvc.perform(get("/users/{name}", "Susan")
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header("Origin", "http://wrong:8080"))
+                .andExpect(status().isForbidden()); // 403 HTTP code when Origin is incorrect.
+    }
 }
