@@ -83,7 +83,7 @@ public class UsersOperationsController {
     }
   }
 
-  private ResponseEntity<Void> loginHandler(final UserDto user, String origin) {
+  private ResponseEntity<Void> loginHandler(final UserDto user, final String origin) {
     try {
       final String token = userService.login(user, origin);
       return ResponseEntity.noContent().header("Authorization", token).build();
