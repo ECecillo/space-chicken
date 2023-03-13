@@ -23,7 +23,7 @@ test-server:
   #image: maven:3.6.1-jdk-11
   only:
     - main
-    - CI_TP2
+    - TP2
   before_script:
     # The runners on the forge need a proxy to access the web. mvn
     # ignores the $http_proxy & friends variable => write a
@@ -41,6 +41,6 @@ deploy:
     - . ci/setup-mvn-proxy.sh && chmod 400 $CI_SSH_KEY
   only:
     - main
-    - CI_TP2
+    - TP2
   script:
     - cd users && mvn clean package && scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY target/users.war gitlabci@192.168.75.14:/opt/tomcat/webapps/users.war
