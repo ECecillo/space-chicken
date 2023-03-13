@@ -1,5 +1,9 @@
 package fr.univlyon1.m1if.m1if13.controller.api;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +21,12 @@ public class AdminController {
   @Autowired
   private AdminServiceImpl adminService;
 
+  @Operation(summary = "Delete user",
+          description = "Delete the user with the login in parameter.")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "200", description = "user deteled", content = @Content),
+          @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+  })
   @DeleteMapping("/users/{login}")
   public ResponseEntity<?> deleteUser(final @PathVariable String login) {
     try {
@@ -27,7 +37,7 @@ public class AdminController {
           HttpStatus.NOT_FOUND, "User Not Found", e);
     } catch (Exception e) {
       throw new ResponseStatusException(
-          HttpStatus.INTERNAL_SERVER_ERROR, "Failed to delete Password", e);
+          HttpStatus.NOT_IMPLEMENTED, "Failed to delete user", e);
     }
   }
 
