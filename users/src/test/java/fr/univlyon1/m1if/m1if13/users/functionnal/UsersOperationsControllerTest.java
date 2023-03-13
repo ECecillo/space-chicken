@@ -15,6 +15,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+/**
+ * Test class for the UsersOperationsController class.
+ */
 @SpringBootTest
 @AutoConfigureMockMvc
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -23,6 +26,11 @@ class UsersOperationsControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    /**
+     * Test the login method with JSON content type in body.
+     * Should return a 204 HTTP code.
+     * @throws Exception if an error occurs.
+     */
     @Test
     @Order(1)
     public void testLoginUserJSON() throws Exception {
@@ -36,6 +44,11 @@ class UsersOperationsControllerTest {
                 .andExpect(status().isNoContent()); // 204 HTTP code for JSON request format.
     }
 
+    /**
+     * Test the login method with XML content type in body.
+     * Should return a 204 HTTP code.
+     * @throws Exception if an error occurs.
+     */
     @Test
     @Order(6)
     public void testLoginUserXML() throws Exception {
@@ -49,6 +62,11 @@ class UsersOperationsControllerTest {
                 .andExpect(status().isNoContent()); // 204 HTTP code for XML request format.
     }
 
+    /**
+     * Test the authenticate method with JSON content type in body and right jwt.
+     * Should return a 204 HTTP code.
+     * @throws Exception if an error occurs.
+     */
     @Test
     @Order(2)
     public void testAuthenticateUserJSON() throws Exception {
@@ -72,6 +90,11 @@ class UsersOperationsControllerTest {
                 .andExpect(status().isNoContent()); // 204 HTTP code
     }
 
+    /**
+     * Test the authenticate method with XML content type in body and right jwt.
+     * Should return a 204 HTTP code.
+     * @throws Exception if an error occurs.
+     */
     @Test
     @Order(7)
     public void testAuthenticateUserXML() throws Exception {
@@ -95,6 +118,11 @@ class UsersOperationsControllerTest {
                 .andExpect(status().isNoContent()); // 204 HTTP code
     }
 
+    /**
+     * Test the logoutUser method with JSON content type in body.
+     * Should return a 204 HTTP code.
+     * @throws Exception if an error occurs.
+     */
     @Test
     @Order(3)
     public void testLogoutUserJSON() throws Exception {
@@ -107,6 +135,11 @@ class UsersOperationsControllerTest {
                 .andExpect(status().isNoContent()); // 204 HTTP code user correctly logged out.
     }
 
+    /**
+     * Test the logoutUser method with XML content type in body.
+     * Should return a 204 HTTP code.
+     * @throws Exception if an error occurs.
+     */
     @Test
     @Order(8)
     public void testLogoutUserXML() throws Exception {
@@ -119,6 +152,11 @@ class UsersOperationsControllerTest {
                 .andExpect(status().isNoContent()); // 204 HTTP code user correctly logged out.
     }
 
+    /**
+     * Test the login method with JSON content type in body and wrong password.
+     * Should return a 401 HTTP code.
+     * @throws Exception if an error occurs.
+     */
     @Test
     @Order(4)
     public void testLoginWrongPasswordJSON() throws Exception {
@@ -132,6 +170,11 @@ class UsersOperationsControllerTest {
                 .andExpect(status().isUnauthorized()); // 401 HTTP code
     }
 
+    /**
+     * Test the login method with XML content type in body and wrong password.
+     * Should return a 401 HTTP code.
+     * @throws Exception if an error occurs.
+     */
     @Test
     @Order(9)
     public void testLoginWrongPasswordXML() throws Exception {
@@ -145,6 +188,11 @@ class UsersOperationsControllerTest {
                 .andExpect(status().isUnauthorized()); // 401 HTTP code
     }
 
+    /**
+     * Test the login method with JSON content type in body and wrong user.
+     * Should return a 404 HTTP code.
+     * @throws Exception if an error occurs.
+     */
     @Test
     @Order(5)
     public void testLoginWrongUserJSON() throws Exception {
@@ -158,6 +206,11 @@ class UsersOperationsControllerTest {
                 .andExpect(status().isNotFound()); // 404 HTTP code
     }
 
+    /**
+     * Test the login method with XML content type in body and wrong user.
+     * Should return a 404 HTTP code.
+     * @throws Exception if an error occurs.
+     */
     @Test
     @Order(10)
     public void testLoginWrongUserXML() throws Exception {
