@@ -57,13 +57,13 @@ Vous pouvez réaliser la partie sur la ZRR en dernier. Elle fait partie du barè
 
 ### 1. Mise en place du projet
 
+&Agrave; partir de ce TP, il est conseillé de travailler dans une branche bien identifiée (par exemple, "TP3"). Cela vous permettra de mettre en place des scripts de CI spécifiques et de gagner du temps au déploiement de votre application sur votre VM.
+
 #### 1.0. Fichiers à ignorer /!\ important
 
 &Agrave; l'aide de [ce template](https://github.com/github/gitignore/blob/master/Node.gitignore), complétez le fichier `.gitignore` de votre dépôt avec les noms de fichiers et répertoires à ignorer pour votre projet (_a minima_ le répertoire `node_modules` et les fichiers de votre IDE).
 
 **Avant de pusher sur la forge, vérifiez bien que le répertoire node_module n'est pas inclus dans votre `git status`.**
-
-&Agrave; partir de ce TP, il est conseillé de travailler dans une branche bien identifiée (par exemple, "TP3"). Cela vous permettra de mettre en place des scripts de CI spécifiques et de gagner du temps au déploiement de votre application sur votre VM.
 
 #### 1.1. Initialisation d'un projet NPM
 
