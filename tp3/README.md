@@ -190,3 +190,5 @@ Comme au premier semestre (et si ça n'a pas été fait au TP précédent) :
 ### 4. CI/CD
 
 Créez un script de CI spécifique à la branche sur laquelle vous travaillez et qui recopie vos fichiers dans un répertoire donné, puis exécuter les commandes NPM pour télécharger les dépendances et (re)lancer l'application.
+
+&Agrave; la fin du TP, n'oubliez pas de merger sur main et de tagguer votre commit.
