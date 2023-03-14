@@ -1,0 +1,181 @@
+swagger: "2.0"
+info:
+  description: "A goldingue guidance API."
+  version: "1.0.0"
+  title: "Space chicken & Goldingue rush"
+  license:
+    name: "CC-BY-NC"
+    url: "http://creativecommons.org/licenses/by-nc/4.0/"
+  contact:
+    name: "Lionel Médini"
+    url: "https://perso.liris.cnrs.fr/lionel.medini"
+schemes:
+- "https"
+host: "192.168.75.xx"
+basePath: "/game/api"
+tags:
+- name: "georesources"
+  description: "Server-side geolocalized resources"
+- name: "ZRR"
+  description: "Game area"
+
+paths:
+  /resources:
+    get:
+      tags:
+      - "georesources"
+      summary: "Get all resources"
+      description: "Returns an array containing the representations of all existing resources in the game"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/GeoResource"
+        401:
+          description: "User authentication failed"
+      security:
+      - bearerAuth: []
+  /resources/{resourceId}:
+    post:
+      tags:
+      - "georesources"
+      summary: "Operate on goldingue plant"
+      description: "Cow-boy user preleves gold or chicken user builds nest"
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "resourceId"
+        in: "path"
+        description: "goldingue plant ID"
+        required: true
+        type: "string"
+      - name: "operationType"
+        in: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/OperationType"
+      responses:
+        204:
+          description: "successful operation"
+        400:
+          description: "Invalid operation type or resource is not a goldingue plant"
+        401:
+          description: "User authentication failed"
+        403:
+          description: "User too far from resource to modify it"
+        404:
+          description: "Resource not found"
+      security:
+      - bearerAuth: []
+  /resources/{resourceId}/position:
+    put:
+      tags:
+      - "georesources"
+      summary: "Update user's position"
+      description: "Send a LatLng object to the server."
+      consumes:
+      - "application/json"
+      parameters:
+      - name: "resourceId"
+        in: "path"
+        description: "User's login"
+        required: true
+        type: "string"
+      - name: position
+        in: "body"
+        description: "User's position"
+        required: true
+        schema:
+          $ref: "#/definitions/LatLng"
+      responses:
+        204:
+          description: "successful operation"
+        400:
+          description: "Invalid position object"
+        401:
+          description: "User authentication failed"
+        403:
+          description: "User not authorized to update resource"
+        404:
+          description: "User not found"
+      security:
+      - bearerAuth: []
+
+  /zrr:
+    get:
+      tags:
+      - "ZRR"
+      summary: "Get ZRR limits"
+      description: "Returns an array containing 4 LatLng objects corresponding to the ZRR corners"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/LatLng"
+        404:
+          description: "No ZRR defined yet"
+      security:
+      - bearerAuth: []
+
+securityDefinitions:
+  bearerAuth:
+    type: apiKey
+    in: header
+    name: Authorization
+
+definitions:
+  GeoResource:
+    type: "object"
+    required:
+    - "id"
+    - "position"
+    properties:
+      id:
+        type: "string"
+        description: "User login or other resource id"
+        example: "toto"
+      position:
+        $ref: "#/definitions/LatLng"
+      role:
+        type: "string"
+        description: "Resource role in the game"
+        enum:
+        - "cow-boy"
+        - "chicken"
+        - "goldingue"
+        - "nest"
+      ttl:
+        type: "integer"
+        description: "For golgingue only: remaining time in seconds before it disappears"
+      nuggets:
+        type: "integer"
+        description: "For cow-boys only: number of gold nuggets (pépites) won"
+      nests:
+        type: "integer"
+        description: "For chickens only: number of nests (nids) built"
+  LatLng:
+    type: "array"
+    items:
+      type: "number"
+    minItems: 2
+    maxItems: 2
+    description: "LatLng object as defined in Leaflet"
+    example: "[45.781987907026334, 4.865596890449525]"
+  OperationType:
+    type: "string"
+    description: "Type of operation to perform on a living goldingue plant"
+    enum:
+    - "grab gold nugget"
+    - "build nest"
+
+externalDocs:
+  description: "See M1IF13 practicals 2022 #3"
+  url: "https://forge.univ-lyon1.fr/LIONEL.MEDINI/m1if13-2022/-/tree/master/tp3"
