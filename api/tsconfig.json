@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "module": "CommonJS",
+    "target": "ES2020",
+    "lib": ["esnext"],
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "allowJs": true,
+    "noEmit": false,
+    "checkJs": false,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strict": false,
+    "noUnusedLocals": true,
+    "noUnusedParameters": false,
+    "noImplicitReturns": false,
+    "strictNullChecks": true,
+    "resolveJsonModule": true,
+    "skipDefaultLibCheck": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "./build",
+    "allowImportingTsExtensions": false,
+    "strictPropertyInitialization": false,
+    "paths": {
+      "/*": ["./src/*"],
+      "~/*": ["./src/*"],
+      "~~/*": ["./*"]
+    }
+  },
+  "types": ["node", "express"],
+  "ts-node": {
+    "require": ["tsconfig-paths/register"]
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules"]
+}
