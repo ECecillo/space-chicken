@@ -2,5 +2,5 @@
 
 ## TP1 & TP2 : framework côté serveur (Spring Boot)
 
- - [lien fichier yaml sur le dépôt.]()
- - [Swagger généré par Spring et déployé sur la VM.]()
+ - [lien fichier yaml sur le dépôt.](https://forge.univ-lyon1.fr/p1805901/space-chicken/-/blob/main/users-api.yaml)
+ - [Swagger généré par Spring et déployé sur la VM.](https://192.168.75.14:8443/users/swagger-ui/index.html#/)
