@@ -30,7 +30,7 @@
         "varsIgnorePattern": "^_"
       }
     ],
-    "max-len": ["error", { "code": 85, "tabWidth": 2 }],
+    "max-len": "off",
     "max-depth": "warn",
     "no-nested-ternary": 0,
     "no-plusplus": 0,
@@ -45,6 +45,7 @@
     "no-console": "off",
     "no-confusing-arrow": "off",
     "no-restricted-syntax": "off",
-    "indent": ["error", 2]
+    "consistent-return" : "off",
+    "no-case-declarations": "off"
   }
 }
