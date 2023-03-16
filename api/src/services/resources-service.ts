@@ -1,30 +1,52 @@
-import { Coordinates, ResourcesStore } from '../types/resources.type';
+import { AxiosRequestConfig } from 'axios';
 
-const filterAllValidResources = async (resources: ResourcesStore) =>
-  resources.filter(
-    (resource) =>
-      ((resource.role === 'cow-boy' || resource.role === 'chicken') &&
-        resource.position !== null &&
-        resource.position !== undefined &&
-        resource.position.longitude !== null &&
-        resource.position.latitude !== null) ||
-      (resource.role === 'goldingue' && resource.ttl > 0) ||
-      (resource.role === 'chicken' && resource.nests > 0),
-  );
+import { apiRequest } from '../config/axios.config';
+import { Coordinates, ResourceRole, ResourcesStore } from '../types/resources.type';
 
-const findFirstResourceById = async (
-  resources: ResourcesStore,
+export const findFirstResourceById = async (
+  ressources: ResourcesStore,
   resourceId: string,
-) => resources.find((resource) => resource.id === resourceId);
+) => ressources.find((resource) => resource.id === resourceId);
 
-const updateUserPosition = async (
+const getUserRole = async (userLogin: string) => {
+  // Send request with axios to /resources/users
+  const config: Partial<AxiosRequestConfig> = {
+    method: 'GET',
+    url: `/users/${userLogin}`,
+  };
+  return apiRequest(config);
+};
+
+export const createNewResource = async (
   resources: ResourcesStore,
   userLogin: string,
   newCoordinates: Coordinates,
 ) => {
-  const userStored = await findFirstResourceById(resources, userLogin);
-  if (!userStored) throw new Error();
-  userStored.position = newCoordinates;
+  const response = await getUserRole(userLogin);
+  if (response.status === 404) throw new Error();
+  const { role }: { role: string } = response.data;
+  const newResource = {
+    id: userLogin,
+    position: newCoordinates,
+    role: role === 'CHICKEN' ? ResourceRole.CHICKEN : ResourceRole.COWBOY,
+    nests: 0,
+    ttl: 0,
+    nuggets: 0,
+  };
+  const newResourcesLength = resources.push(newResource);
+  return resources.at(newResourcesLength - 1);
 };
 
-export { filterAllValidResources, findFirstResourceById, updateUserPosition };
+export const updatePositionOrCreateUser = async (
+  resources: ResourcesStore,
+  userLogin: string,
+  newCoordinates: Coordinates,
+): Promise<{ status: number; message: string }> => {
+  const userStored = await findFirstResourceById(resources, userLogin);
+  if (!userStored) {
+    await createNewResource(resources, userLogin, newCoordinates);
+    return { status: 201, message: 'New Resource created.' };
+  }
+  userStored!.position = newCoordinates;
+  return { status: 204, message: 'successful operation' };
+};

@@ -4,14 +4,11 @@ import {
   generateGoldingue,
   handleTTLOperation,
   handleZRROperation,
-} from '../../controller/admin/AdminOperationController';
-import resources from '../../data/resources.fixtures';
-import { checkTokenMiddleware } from '../../middleware/check-token-middleware';
-import { getAllPropertiesFromAppConfig } from '../../services/admin-service';
-import {
-  AdminRequestPayload,
-  AdminZRRUpdateRequestType,
-} from '../../types/admin.type';
+} from '../controller/admin/AdminOperationController';
+import resources from '../data/resources.fixtures';
+import { checkTokenMiddleware } from '../middleware/check-token-middleware';
+import { getAllPropertiesFromAppConfig } from '../services/admin-service';
+import { AdminRequestPayload, AdminZRRUpdateRequestType } from '../types/admin.type';
 
 const router = express.Router();
 
