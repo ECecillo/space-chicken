@@ -1,23 +1,28 @@
+import * as dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
 
-import { sendResponse } from './handlers/error/handle-error-response';
-
 import { serverPort } from './config/env.config';
-import auth from './route/auth';
+import { sendResponse } from './handlers/error/handle-error-response';
+import admin from './route/admin/admin.route';
+import resources from './route/resources/resources.route';
 
-const app = express();
+dotenv.config();
+
 const port = serverPort;
-
 const dirname = path.resolve();
 const options = {
   root: path.join(dirname, 'public'),
 };
+export const app = express();
 
 app.use(express.json()); // Permet de parser le body des requêtes.
 app.use(express.urlencoded({ extended: true }));
-app.use('/api/auth', auth);
+
 app.use('/static', express.static('public'));
+app.use('/api/resources', resources);
+app.use('/admin', admin);
+
 app.get('/', (_req, res) => {
   res.status(200).sendFile('/index.html', options);
 });
