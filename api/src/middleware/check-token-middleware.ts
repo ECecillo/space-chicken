@@ -36,6 +36,8 @@ export const checkTokenMiddleware = async (
     req.body.isAdmin = userLogin === 'admin';
     return next(); // Chain request.
   } catch (err) {
-    return res.status(401).send("Your session has expired or your token is invalid.");
+    return res
+      .status(401)
+      .send('Your session has expired or your token is invalid.');
   }
 };

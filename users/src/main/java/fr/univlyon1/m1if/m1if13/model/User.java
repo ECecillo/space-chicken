@@ -44,7 +44,7 @@ public class User {
     public User() {
         this.login = "";
         this.password = "";
-        this.species = Species.POULE;
+        this.species = Species.CHICKEN;
         this.image = "";
     }
 
