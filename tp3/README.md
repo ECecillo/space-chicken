@@ -155,10 +155,12 @@ Pour chacune de ces 2 parties de l'application, vous créerez un middleware spé
 
 L'API du serveur est donnée dans le fichier [`express-api.yaml`](./express-api.yaml). Vous pouvez vous aider de la génération de serveurs pour générer le squelette de votre code.
 
-&Agrave; la réception de chaque requête, n'oubliez pas de valider l'identité de l'utilisateur avec le serveur Spring :
+&Agrave; la réception de chaque requête, le serveur devra valider l'identité de l'utilisateur avec le serveur Spring :
 
 - pour le requêtage du serveur Spring, vous pouvez utiliser [Axios](https://www.npmjs.com/package/axios)
 - pour éviter de vous e...er avec la configuration d'Axios lorsque vous requêtez le serveur Spring (dont le certificat est signé par une autorité qu'il ne connaît pas), vous pouvez le requêter sur le port 8080.
+
+Remarque : **Il est conseillé de n'implémenter la validation des tokens qu'une une fois que toutes les requêtes de la partie "game" fonctionnent**. Vous allez gagner beaucoup de temps si vous n'avez pas besoin de générer un token pour tester chaque requête. Au départ, il est donc préférable de mettre en place un "faux test de validation" qui réussit toujours, puis de le remplacer par une validation _via_ Tomcat fonctionnelle.
 
 ##### 2.2.2. Interface d'administration
 
