@@ -7,7 +7,7 @@
     "pretty": "prettier ./src/** --color --write",
     "prestart": "npm run pretty && eslint --quiet --fix --color --ext .js,.ts ./",
     "start": "tsc && node build/server.js",
-    "dev": "nodemon --watch src -e js,ts --exec \"ts-node --esm src/server.ts\""
+    "dev": "npm run prestart && nodemon --watch src -e js,ts --exec \"ts-node --esm src/server.ts\""
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "author": "CECILLON Enzo, LEDRU Romane, BOUDRAA Abdelhakim.",
   "license": "ISC",
   "dependencies": {
+    "axios": "^1.3.4",
     "dotenv": "^16.0.3",
     "express": "^4.18.2"
   },
