@@ -83,9 +83,10 @@ public interface UserServiceInterface {
    * @param jwt    token.
    * @param origin request origin, for comparison with the origin stored in the
    *               JWT token.
+   * @return The user login corresponding to the JWT token.
    * @throws UserNotFoundException if we could not find the user with the mapped
    *                               object.
    * @throws EmptyParamException   if the origin and jwt have not been passed.
    */
-  void authenticate(String jwt, String origin) throws UserNotFoundException, EmptyParamException;
+  String authenticate(String jwt, String origin) throws UserNotFoundException, EmptyParamException;
 }
