@@ -3,6 +3,7 @@ package fr.univlyon1.m1if.m1if13.controller.operation;
 import javax.naming.AuthenticationException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -120,8 +121,10 @@ public class UsersOperationsController {
       final @RequestParam("jwt") String jwt,
       final @RequestParam("Origin") String origin) {
     try {
-      userService.authenticate(jwt, origin);
-      return ResponseEntity.noContent().build();
+      String userLogin = userService.authenticate(jwt, origin);
+      HttpHeaders responseHeaders = new HttpHeaders();
+      responseHeaders.set("X-Space-Chicken-Login", userLogin); // define a cutstom http header.
+      return ResponseEntity.noContent().headers(responseHeaders).build();
     } catch (EmptyParamException e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Missing parameters", e);
