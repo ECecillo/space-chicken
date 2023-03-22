@@ -104,8 +104,8 @@ public class UserServiceImpl implements UserServiceInterface {
   }
 
   @Override
-  public void authenticate(final String jwt, final String origin) throws UserNotFoundException, EmptyParamException {
-    if (jwt == null && origin == null) {
+  public String authenticate(final String jwt, final String origin) throws UserNotFoundException, EmptyParamException {
+    if (jwt == null || origin == null) {
       throw new EmptyParamException();
     }
     String login = tokenManager.verifyToken(jwt);
@@ -113,5 +113,6 @@ public class UserServiceImpl implements UserServiceInterface {
     if (optionalUser.isEmpty()) {
       throw new UserNotFoundException();
     }
+    return login;
   }
 }
