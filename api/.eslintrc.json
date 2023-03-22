@@ -12,6 +12,14 @@
     "ecmaVersion": "latest",
     "sourceType": "module"
   },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".d.ts", ".ts"],
+        "moduleDirectory": ["node_modules", "src"]
+      }
+    }
+  },
   "rules": {
     "no-unused-vars": [
       "error",
