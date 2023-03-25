@@ -19,6 +19,7 @@ public class UserDao implements Dao<User> {
 
     public UserDao() {
         this.users.put("ECecillo", new User("ECecillo", "root", Species.POULE));
+        this.users.put("admin", new User("admin", "root", Species.COWBOY));
         this.users.put("John", new User("John", "johnPassword", Species.COWBOY));
         this.users.put("Susan", new User("Susan", "susanPassword", Species.POULE));
     }
