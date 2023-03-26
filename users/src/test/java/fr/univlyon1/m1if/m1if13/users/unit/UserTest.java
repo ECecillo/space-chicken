@@ -21,7 +21,7 @@ class UserTest {
      */
     @BeforeEach
     void setUp() {
-        jeanette = new User("j2045", "cotcodec", Species.POULE);
+        jeanette = new User("j2045", "cotcodec", Species.CHICKEN);
         averell = new User("Averell Dalton", "pan", Species.COWBOY);
     }
 
@@ -39,7 +39,7 @@ class UserTest {
      */
     @Test
     void getSpecies() {
-        assert (jeanette.getSpecies().equals(Species.POULE));
+        assert (jeanette.getSpecies().equals(Species.CHICKEN));
         assert (averell.getSpecies().equals(Species.COWBOY));
     }
 

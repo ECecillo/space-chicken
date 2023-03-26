@@ -18,10 +18,12 @@ public class UserDao implements Dao<User> {
     private Map<String, User> users = new HashMap<>();
 
     public UserDao() {
-        this.users.put("ECecillo", new User("ECecillo", "root", Species.POULE));
+        this.users.put("ECecillo", new User("ECecillo", "root", Species.CHICKEN));
         this.users.put("admin", new User("admin", "root", Species.COWBOY));
-        this.users.put("John", new User("John", "johnPassword", Species.COWBOY));
-        this.users.put("Susan", new User("Susan", "susanPassword", Species.POULE));
+        this.users.put("Elfenwaar", new User("Elfenwaar", "root", Species.COWBOY));
+        this.users.put("Melp", new User("Melp", "root", Species.COWBOY));
+        this.users.put("John", new User("John", "johnPassword", Species.COWBOY)); // Personas
+        this.users.put("Susan", new User("Susan", "susanPassword", Species.CHICKEN)); // Personas
     }
 
     @Override

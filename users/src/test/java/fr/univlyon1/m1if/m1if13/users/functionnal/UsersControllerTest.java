@@ -42,7 +42,10 @@ class UsersControllerTest {
                 .andExpect(content().string(containsString(
                         "[\"ECecillo\","
                                 + "\"Susan\","
-                                + "\"John\"]"))
+                                + "\"Elfenwaar\","
+                                + "\"Melp\","
+                                + "\"John\","
+                                + "\"admin\"]"))
                 );
     }
 
@@ -60,7 +63,10 @@ class UsersControllerTest {
                         "<Set>"
                                 + "<item>ECecillo</item>"
                                 + "<item>Susan</item>"
+                                + "<item>Elfenwaar</item>"
+                                + "<item>Melp</item>"
                                 + "<item>John</item>"
+                                + "<item>admin</item>"
                                 + "</Set>"))
                 );
     }
@@ -78,7 +84,7 @@ class UsersControllerTest {
                         .content("{"
                                 + "\"login\":\"newUserJSON\","
                                 + "\"password\":\"password\","
-                                + "\"species\":\"POULE\","
+                                + "\"species\":\"CHICKEN\","
                                 + "\"image\":\"imageUrl\""
                                 + "}"
                         )) // User created.
@@ -89,7 +95,10 @@ class UsersControllerTest {
                         "[\"ECecillo\","
                         + "\"newUserJSON\","
                         + "\"Susan\","
-                        + "\"John\"]"))
+                        + "\"Elfenwaar\","
+                        + "\"Melp\","
+                        + "\"John\","
+                        + "\"admin\"]"))
                 ); // Check user correctly added.
     }
 
@@ -106,7 +115,7 @@ class UsersControllerTest {
                         .content("<user>"
                                 + "<login>newUserXML</login>"
                                 + "<password>password</password>"
-                                + "<species>POULE</species>"
+                                + "<species>CHICKEN</species>"
                                 + "<image>imageUrl</image>"
                                 + "</user>"
                         )) // User created.
@@ -119,7 +128,10 @@ class UsersControllerTest {
                                 + "<item>ECecillo</item>"
                                 + "<item>newUserJSON</item>"
                                 + "<item>Susan</item>"
+                                + "<item>Elfenwaar</item>"
+                                + "<item>Melp</item>"
                                 + "<item>John</item>"
+                                + "<item>admin</item>"
                                 + "</Set>"))
                 ); // Check user correctly added.
     }
@@ -137,7 +149,7 @@ class UsersControllerTest {
                 .andExpect(status().isOk()) // 200 HTTP code
                 .andExpect(content().string(containsString(
                         "{\"login\":\"newUserJSON\","
-                        + "\"species\":\"POULE\","
+                        + "\"species\":\"CHICKEN\","
                         + "\"connected\":false,"
                         + "\"image\":\"imageUrl\"}"))
                 );
@@ -157,7 +169,7 @@ class UsersControllerTest {
                 .andExpect(content().string(containsString(
                         "<User>"
                         + "<login>newUserXML</login>"
-                        + "<species>POULE</species>"
+                        + "<species>CHICKEN</species>"
                         + "<connected>false</connected>"
                         + "<image>imageUrl</image>"
                         + "</User>"))
@@ -188,7 +200,14 @@ class UsersControllerTest {
                 .andExpect(status().isNoContent()) // 204 HTTP code.
                 .andExpect(content().string(containsString("User deleted successfully")));
         mockMvc.perform(get("/users"))
-                .andExpect(content().string(containsString("[\"newUserXML\",\"ECecillo\",\"Susan\",\"John\"]"))
+                .andExpect(content().string(
+                        containsString("[\"newUserXML\","
+                                + "\"ECecillo\","
+                                + "\"Susan\","
+                                + "\"Elfenwaar\","
+                                + "\"Melp\","
+                                + "\"John\","
+                                + "\"admin\"]"))
                 ); // User deleted.
     }
 
@@ -205,7 +224,12 @@ class UsersControllerTest {
                 .andExpect(status().isNoContent()) // 204 HTTP code.
                 .andExpect(content().string(containsString("User deleted successfully")));
         mockMvc.perform(get("/users"))
-                .andExpect(content().string(containsString("[\"ECecillo\",\"Susan\",\"John\"]"))
+                .andExpect(content().string(containsString("[\"ECecillo\","
+                        + "\"Susan\","
+                        + "\"Elfenwaar\","
+                        + "\"Melp\","
+                        + "\"John\","
+                        + "\"admin\"]"))
                 ); // User deleted.
     }
 
@@ -230,13 +254,13 @@ class UsersControllerTest {
         String json = "{"
                 + "\"login\":\"Susan\","
                 + "\"password\":\"password\","
-                + "\"species\":\"POULE\","
+                + "\"species\":\"CHICKEN\","
                 + "\"image\":null"
                 + "}";
         String xml = "<user>"
                 + "<login>Susan</login>"
                 + "<password>password</password>"
-                + "<species>POULE</species>"
+                + "<species>CHICKEN</species>"
                 + "<image>imageUrl</image>"
                 + "</user>";
         mockMvc.perform(post("/users")
