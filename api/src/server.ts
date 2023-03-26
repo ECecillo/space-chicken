@@ -4,8 +4,8 @@ import path from 'path';
 
 import { serverPort } from './config/env.config';
 import { sendResponse } from './handlers/error/handle-error-response';
-import admin from './route/admin/admin.route';
-import resources from './route/resources/resources.route';
+import admin from './route/admin.route';
+import resources from './route/resources.route';
 
 dotenv.config();
 
