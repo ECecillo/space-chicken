@@ -4,7 +4,7 @@ dotenv.config();
 
 const rootUrl =
   process.env.NODE_ENV === 'production'
-    ? process.env.SPRING_SEVER
+    ? process.env.SPRING_SERVER
     : process.env.LOCAL;
 
 const serverPort = process.env.EXPRESS_PORT || 3000;
