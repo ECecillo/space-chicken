@@ -6,7 +6,8 @@
   "scripts": {
     "pretty": "prettier ./src/** --color --write",
     "prestart": "npm run pretty && eslint --quiet --fix --color --ext .js,.ts ./",
-    "start": "tsc && node build/server.js",
+    "build": "npx tsc",
+    "start": "node build/server.js",
     "dev": "npm run prestart && nodemon --watch src -e js,ts --exec \"ts-node --esm src/server.ts\""
   },
   "repository": {
