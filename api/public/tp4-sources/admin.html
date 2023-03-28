@@ -5,7 +5,6 @@
         <title>Des Poules et des Cow-Boys - Confidentiel</title>
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/purecss@3.0.0/build/pure-min.css" integrity="sha384-X38yfunGUhNzHpBaEBsWLO+A0HDYOQi8ufWDkZ0k9e0eXz/tH3II7uKZ9msv++Ls" crossorigin="anonymous">
         <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
-        <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js" integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
         <link rel="stylesheet" href="css/style.css"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
@@ -22,9 +21,9 @@
 				<p><strong>TODO:</strong> faire en sorte que le formulaire se mette à jour automatiquement quand on clique sur la carte ou quand on modifie le niveau de zoom, et inversement.</p>
 				<form onsubmit="return false;" class="pure-form">
 					<fieldset style="display: flow-root;">
-						<label for="lat">Lattitude : </label> <input type="text" id="lat" name="lat" value="45.782">
-						<label for="lon">Longitude : </label> <input type="text" id="lon" name="lon" value="4.8656">
-						<label for="zoom">Zoom : <span id="zoomValue"></span></label> <input type="range" id="zoom" name="zoom" min="1" max="21" value="15">
+						<label for="lat">Lattitude : </label> <input type="text" id="lat" name="lat" >
+						<label for="lon">Longitude : </label> <input type="text" id="lon" name="lon" >
+						<label for="zoom">Zoom : <span id="zoomValue"></span></label> <input type="range" id="zoom" name="zoom" min="1" max="21">
 					</fieldset>
 				</form>
 			</div>
