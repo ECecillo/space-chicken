@@ -1,0 +1,65 @@
+# Cache downloaded dependencies and plugins between builds.
+# Not strictly necessary, but speeds up the builds.
+stages:
+  - test
+  - deploy_spring
+  - deploy_node
+
+
+cache:
+  key: "$CI_JOB_NAME"
+  paths:
+    # Must be within the repository under test hence we can't use the
+    # default ~/.m2
+    - .m2/repository
+
+variables:
+  # Use the cached directory above.
+  MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
+
+test-server:
+  stage: test
+  image: maven:3.8.3-openjdk-17
+  only:
+    - main
+  before_script:
+    # The runners on the forge need a proxy to access the web. mvn
+    # ignores the $http_proxy & friends variable => write a
+    # configuration file that does this for us.
+    - . ci/setup-mvn-proxy.sh
+    # Useful only for debugging
+    #- cat ~/.m2/settings.xml
+  script:
+    - cd users/ && mvn test --batch-mode
+
+deploy_spring:
+  stage: deploy_spring
+  image: maven:3.8.3-openjdk-17
+  before_script:
+    - . ci/setup-mvn-proxy.sh && chmod 400 $CI_SSH_KEY
+  only:
+    - main
+  script:
+    - cd users && mvn clean package && scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY target/users.war gitlabci@192.168.75.14:/opt/tomcat/webapps/users.war
+
+deploy_node:
+  stage: deploy_node
+  image: node:18.15
+  before_script:
+    - . ci/setup-mvn-proxy.sh && chmod 400 $CI_SSH_KEY
+  only:
+    - main
+  script:
+    - cd api/
+    - echo "EXPRESS_PORT=$EXPRESS_PORT" > .env
+    - echo "NODE_ENV=$NODE_ENV" >> .env
+    - echo "LOCAL=http://localhost:8080" >> .env
+    - echo "SPRING_SERVER=$SPRING_SERVER" >> .env
+    - cat .env
+    - npm install --include=dev
+    - npm run build
+    - mv .env build
+    - mv public build
+    - scp -r -o StrictHostKeyChecking=no -i $CI_SSH_KEY ../api/build gitlabci@192.168.75.14:/home/gitlabci
+    - ssh -i $CI_SSH_KEY gitlabci@192.168.75.14 "pm2 restart all"
+
