@@ -1,14 +1,17 @@
-// initialisation de la map
 import L from "leaflet";
+// initialisation de la map
 import { updateLatValue, updateLonValue, updateZoomValue, getZRRandTTL, getResources } from './form.js';
+import chicken from '../img/chicken.png';
+import cowboy from '../img/cowboy.png';
+import goldingue from '../img/goldingue.png';
 
 // const lat = 45.782; const lng = 4.8656; const zoom = 19;
 
 // decalaration des icons de la carte
 const icons = {
-	"chicken": L.icon({ iconUrl: "img/chicken.png", iconSize: [50, 50] }),
-	"cow-boy": L.icon({ iconUrl: "img/cowboy.png", iconSize: [50, 50] }),
-	"goldingue": L.icon({ iconUrl: "img/goldingue.png", iconSize: [50, 50] })
+	"chicken": L.icon({ iconUrl: chicken, iconSize: [50, 50] }),
+	"cow-boy": L.icon({ iconUrl: cowboy, iconSize: [50, 50] }),
+	"goldingue": L.icon({ iconUrl: goldingue, iconSize: [50, 50] })
 };
 
 // récuperation des ressources initiales du jeu
@@ -86,11 +89,8 @@ function initMap() {
 	}).addTo(map);
 
 
-	 // Ajout d'un marker au millieu de la zrr
+	 // Centre de la ZRR
 	let center = map.getCenter();
-
-	// on essaiera de trouver une alternative à un simple marker pour la zrr
-	// L.marker([center.lat, center.lng]).addTo(map).bindPopup('Centre de la<br>ZRR.').openPopup();
 
 	// Clic sur la carte
 	map.on('click', e => {

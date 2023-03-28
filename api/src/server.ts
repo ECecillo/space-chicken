@@ -9,6 +9,8 @@ import resources from './route/resources.route';
 
 dotenv.config();
 
+const cors = require('cors');
+
 const port = serverPort;
 const dirname = path.resolve();
 const options = {
@@ -18,6 +20,8 @@ export const app = express();
 
 app.use(express.json()); // Permet de parser le body des requêtes.
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: '*' })); // Permet de gérer les requêtes cross-origin (CORS).
+// Traite les requêtes issues du dossier public (http://localhost:3000/static/...)d'un serveur front.
 
 app.use('/static', express.static('public'));
 app.use('/api/resources', resources);
