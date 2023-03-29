@@ -17,7 +17,7 @@ const getUserRole = async (userLogin: string) => {
   return apiRequest(config);
 };
 
-export const createNewResource = async (
+export const createNewPlayer = async (
   resources: ResourcesStore,
   userLogin: string,
   newCoordinates: Coordinates,
@@ -44,9 +44,9 @@ export const updatePositionOrCreateUser = async (
 ): Promise<{ status: number; message: string }> => {
   const userStored = await findFirstResourceById(resources, userLogin);
   if (!userStored) {
-    await createNewResource(resources, userLogin, newCoordinates);
+    await createNewPlayer(resources, userLogin, newCoordinates);
     return { status: 201, message: 'New Resource created.' };
   }
   userStored!.position = newCoordinates;
-  return { status: 204, message: 'successful operation' };
+  return { status: 204, message: '' };
 };

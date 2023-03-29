@@ -3,7 +3,8 @@
   "env": {
     "browser": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": ["airbnb-base", "prettier"],
   "plugins": ["@typescript-eslint/eslint-plugin"],
@@ -45,7 +46,7 @@
     "no-console": "off",
     "no-confusing-arrow": "off",
     "no-restricted-syntax": "off",
-    "consistent-return" : "off",
+    "consistent-return": "off",
     "no-case-declarations": "off"
   }
 }
