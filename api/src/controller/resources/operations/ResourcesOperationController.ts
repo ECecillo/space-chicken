@@ -1,6 +1,6 @@
 import { OperationType } from '../../../model/enum';
 import {
-  createNewResource,
+  createNewPlayer,
   findFirstResourceById,
 } from '../../../services/resources-service';
 import { MiddlewarePayload, TypedRequestBody } from '../../../types/express.type';
@@ -40,7 +40,7 @@ export async function handleResourceOperation(
 
   let player = await findFirstResourceById(resources, userLogin);
   if (!player) {
-    const result = await createNewResource(
+    const result = await createNewPlayer(
       resources,
       userLogin,
       goldingueFound.position,
@@ -78,5 +78,5 @@ export async function handleResourceOperation(
       };
   }
 
-  return { status: 204, message: 'successful operation' };
+  return { status: 204, message: '' };
 }
