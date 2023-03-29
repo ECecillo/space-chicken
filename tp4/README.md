@@ -43,11 +43,11 @@ Dans cette partie, vous allez commencer par faire en sorte que votre client soit
 
 _Fonctionnalités_ :
 
-- La page de login permettra de récupérer un token pour pouvoir interroger l'API `/game` et recevoir les positions des ressources sur la carte. Vous devrez envoyer une requête asynchrone en CORS au serveur Spring et mémoriser le token avant de changer de page.
+- La page de login permettra de récupérer un token pour pouvoir interroger la partie `/api` du serveur et recevoir les positions des ressources sur la carte. Vous devrez envoyer une requête asynchrone en CORS au serveur Spring et mémoriser le token avant de changer de page.
 - Pour vous dérouiller côté client, vous devrez faire fonctionner le premier formulaire de la page `admin.html` : mettre à jour les différents champs quand la carte est modifiée, et déplacer / zoomer la carte quand la valeur d'un champ change. Aidez-vous de la [doc de Leaflet](https://leafletjs.com/reference.html) pour cela.
 - Pour la ZRR, l'utilisateur devra positionner la carte où il veut que le jeu se tienne et cliquer sur le bouton "Set" pour définir la ZRR aux limites de la carte, puis sur "Send" pour l'envoyer au serveur. &Agrave; vous de mettre en place les scripts correspondants.
 - Pour le TTL, vous pouvez suivre un fonctionnement similaire à celui utilisé pour l'envoi de la ZRR.
-- Le jeu sera lancé dès le login des différents utilisateurs. Vous devrez donc envoyer régulièrement des requêtes à l'API `/game` d'Express pour pouvoir récupérer les ressources et les placer sur la carte.
+- Le jeu sera lancé dès le login des différents utilisateurs. Vous devrez donc envoyer régulièrement des requêtes à la partie `/api` d'Express pour pouvoir récupérer les ressources et les placer sur la carte.
 
 _Indications techniques_ :
 
@@ -105,7 +105,7 @@ où la partie droite permet d'accéder par une requête HTTP au répertoire cont
 
 - Rajoutez un script NPM `prebuild` qui lancera la validation du code avec ESLint, à l'aide du plugin [EslintWebpackPlugin](https://webpack.js.org/plugins/eslint-webpack-plugin/#root). Corrigez au besoin le code (ou adaptez quelques règles) pour qu'il passe la validation.
 - Rajoutez un script `build` dans le fichier package.json pour pouvoir lancer webpack facilement. Vous pouvez rajouter d'autres commandes qui simplifient le déploiement (watch...), mais dans ce cas, indiquez dans votre readme quelle commande doit être exécutée pour lancer votre application.
-- Rajoutez, avant la phase de build les phases de validation et de tests à l'aide d'un "pré-script" de build, comme indiqué [ici](https://docs.npmjs.com/cli/v7/using-npm/scripts#pre--post-scripts). Une fois le packaging de l'application terminé, vous pouvez aussi faire la copie des fichiers vers le répertoire `api/public` dans un "post-script" de la même façon.
+- Rajoutez, avant la phase de build les phases de validation et de tests à l'aide d'un "pré-script" de build, comme indiqué [ici](https://docs.npmjs.com/cli/v7/using-npm/scripts#pre--post-scripts). Une fois le packaging de l'application terminé, vous pouvez aussi faire la copie des fichiers vers le répertoire `game/public` dans un "post-script" de la même façon.
 - Générez le bundle correspondant à votre projet avec la commande `npm run build`, et vérifiez que toutes les phases de la chaîne de build se déroulent correctement.
 
 &Agrave; la fin de cette partie, vous n'avez plus qu'une commande à taper pour déclencher toute la chaîne de build. Vous pourrez utiliser ce mécanisme dans la CI (voir section 6).
