@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 
 import { serverPort } from './config/env.config';
 import { sendResponse } from './handlers/error/handle-error-response';
@@ -8,8 +9,6 @@ import admin from './route/admin.route';
 import resources from './route/resources.route';
 
 dotenv.config();
-
-const cors = require('cors');
 
 const port = serverPort;
 const dirname = path.resolve();

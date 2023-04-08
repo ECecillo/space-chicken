@@ -1,89 +1,91 @@
 @font-face {
-	font-family: _h1_;
-	src: url(./fonts/rockly.otf);
+  font-family: _h1_;
+  src: url(./fonts/rockly.otf);
 }
 
 @font-face {
-	font-family: _h2_;
-	src: url(./fonts/grozel.ttf);
+  font-family: _h2_;
+  src: url(./fonts/grozel.ttf);
 }
 
 @font-face {
-	font-family: _strong_;
-	src: url(./fonts/rockly.otf);
+  font-family: _strong_;
+  src: url(./fonts/rockly.otf);
 }
 
 @font-face {
-	font-family: _normal_;
-	src: url(./fonts/Munson_Roman.otf);
+  font-family: _normal_;
+  src: url(./fonts/Munson_Roman.otf);
 }
-
 
 body {
-	background-color: #081F1F;
-	color: silver;
-	font-family: _normal_;
-	padding: 0 5% 0 5%;
+  background-color: #081f1f;
+  color: silver;
+  font-family: _normal_;
+  padding: 0 5% 0 5%;
 }
 
 .b {
-	background-image: url('../img/poules-cowboy.png');
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-blend-mode: screen;
-	opacity: 1;
+  background-image: url('../img/poules-cowboy.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: screen;
+  opacity: 1;
 }
 
 h1 {
-	color: white;
-	font-family: _h1_;
-	font-weight: bolder;
-	font-size: 4.5em;
-	text-shadow: 3px 3px 5px ghostwhite;
+  color: white;
+  font-family: _h1_;
+  font-weight: bolder;
+  font-size: 4.5em;
+  text-shadow: 3px 3px 5px ghostwhite;
 }
 
 h2 {
-	font-family: _h2_;
-	font-weight: bold;
-	font-size: 2em;
-	color: darkslategrey;
+  font-family: _h2_;
+  font-weight: bold;
+  font-size: 2em;
+  color: darkslategrey;
 }
 
 strong {
-	font-family: _h2_;
+  font-family: _h2_;
 }
 
 a:link {
-	color: lightgray;
+  color: lightgray;
 }
 
 #map {
-	height: 400px;
-	width: 100%;
-	border: 1px solid;
+  height: 400px;
+  width: 100%;
+  border: 1px solid;
 }
 
-input, input[type=submit], select, button {
-	background-color: #2F4F4F !important;
-	color: lightgray !important;
-	border: 1px solid !important;
-	border-radius: 5px !important;
+input,
+input[type='submit'],
+select,
+button {
+  background-color: #2f4f4f !important;
+  color: lightgray !important;
+  border: 1px solid !important;
+  border-radius: 5px !important;
 }
 
 .elanor {
-	font-family: _h2_;
-	text-align: right;
+  font-family: _h2_;
+  text-align: right;
 }
 
 .content {
-	background-color: #081F1F;
-	border: 1px solid;
-	padding: 5px;
-	width: 100%;
+  background-color: #081f1f;
+  border: 1px solid;
+  padding: 5px;
+  width: 100%;
 }
 
 .icon {
-	width: 50px;
-	border-radius: 50%;
-	opacity: 50%;
+  width: 50px;
+  border-radius: 50%;
+  opacity: 50%;
 }

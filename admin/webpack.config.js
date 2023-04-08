@@ -4,8 +4,8 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
   entry: {
-    index: './src/index.js',
-    admin: './src/admin.js',
+    index: './src/index.ts',
+    admin: './src/admin.ts',
   },
 
   output: {
@@ -23,6 +23,19 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         type: 'asset/resource',
       },
+      {
+        test: /\.(js|tsx?)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              '@babel/preset-env',
+              '@babel/preset-typescript',
+            ],
+          }
+        },
+      }
     ],
   },
 
@@ -40,6 +53,10 @@ module.exports = {
       },
     ),
   ],
+
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
 
   devServer: {
     static: {
