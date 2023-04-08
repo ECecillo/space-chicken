@@ -41,6 +41,8 @@ public class UsersOperationsController {
       @ApiResponse(responseCode = "404", description = "User not found", content = @Content) })
   @CrossOrigin(origins = {
       "http://localhost:8080",
+      "http://localhost:3000",
+      "http://localhost:3376",
       "http://192.168.75.14",
       "https://192.168.75.14"
   }, exposedHeaders = "Authorization")
@@ -60,7 +62,11 @@ public class UsersOperationsController {
   @ApiResponses(value = {
       @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
       @ApiResponse(responseCode = "404", description = "User not found", content = @Content) })
-  @CrossOrigin(origins = { "http://localhost:8080", "http://192.168.75.14", "https://192.168.75.14" })
+  @CrossOrigin(origins = {      "http://localhost:8080",
+                                "http://localhost:3000",
+                                "http://localhost:3376",
+                                "http://192.168.75.14",
+                                "https://192.168.75.14" })
   @PostMapping(path = "/logout", consumes = {
       MediaType.APPLICATION_JSON_VALUE,
       MediaType.APPLICATION_XML_VALUE })
@@ -80,6 +86,8 @@ public class UsersOperationsController {
       @ApiResponse(responseCode = "404", description = "User not found", content = @Content) })
   @CrossOrigin(origins = {
       "http://localhost:8080",
+      "http://localhost:3000",
+      "http://localhost:3376",
       "http://192.168.75.14",
       "https://192.168.75.14"
   }, exposedHeaders = "Authorization")
@@ -98,7 +106,11 @@ public class UsersOperationsController {
   @ApiResponses(value = {
       @ApiResponse(responseCode = "204", description = "Successful operation", content = @Content),
       @ApiResponse(responseCode = "404", description = "User not found", content = @Content) })
-  @CrossOrigin(origins = { "http://localhost:8080", "http://192.168.75.14", "https://192.168.75.14" })
+  @CrossOrigin(origins = {       "http://localhost:8080",
+                                 "http://localhost:3000",
+                                 "http://localhost:3376",
+                                 "http://192.168.75.14",
+                                 "https://192.168.75.14" })
   @PostMapping(path = "/logout", consumes = {
       MediaType.APPLICATION_FORM_URLENCODED_VALUE
   })
