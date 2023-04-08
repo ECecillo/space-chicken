@@ -23,9 +23,14 @@
 				<p><strong>COORDONNEES : </strong>Centre de la ZRR</p>
 				<form onsubmit="return false;" class="pure-form">
 					<fieldset style="display: flow-root;">
-						<label for="lat">Latitude : </label> <input type="text" id="lat" name="lat" >
-						<label for="lon">Longitude : </label> <input type="text" id="lon" name="lon" >
-						<label for="zoom">Zoom : <span id="zoomValue"></span></label> <input type="range" id="zoom" name="zoom" min="1" max="21">
+						<label for="currentLatitude">Latitude : </label>
+						<input type="text" id="currentLatitude" name="currentLatitude" >
+
+						<label for="currentLongitude">Longitude : </label>
+						<input type="text" id="currentLongitude" name="currentLongitude" >
+
+						<label for="zoom">Zoom : <span id="zoomValue"></span></label>
+						<input type="range" id="zoom" name="zoom" min="1" max="21">
 					</fieldset>
 				</form>
 			</div>
@@ -40,19 +45,25 @@
 			<h2>ZRR</h2>
 			<div class="content">
 				<p><strong>COORDONNEES : </strong>Set les coordonnées de la carte actuelle.</p>
-				<form id="setCorner1" onsubmit="return false;" class="pure-form">
+				<form id="setCorner" onsubmit="return false;" class="pure-form">
 					<fieldset>
-						<label for="lat1">Latitude : </label> <input type="text" id="lat1" name="lat1">&nbsp;&nbsp;
-						<label for="lon1">Longitude : </label> <input type="text" id="lon1" name="lon1">
+						<label for="northWestLatitude">Latitude : </label>
+						<input type="text" id="northWestLatitude" name="northWestLatitude">
+
+						<label for="northWestLongitude">Longitude : </label>
+						<input type="text" id="northWestLongitude" name="northWestLongitude">
 					</fieldset>
 					<fieldset>
-						<label for="lat2">Latitude : </label> <input type="text" id="lat2" name="lat2">&nbsp;&nbsp;
-						<label for="lon2">Longitude : </label> <input type="text" id="lon2" name="lon2">
+						<label for="southEastLatitude">Latitude : </label>
+						<input type="text" id="southEastLatitude" name="southEastLatitude">
+
+						<label for="southEastLongitude">Longitude : </label>
+						<input type="text" id="southEastLongitude" name="southEastLongitude">
 					</fieldset>
 					<fieldset>
-						<label for="setZrrButton">Définir les limites de la ZRR : </label>&nbsp;&nbsp;
-						<button class="pure-button pure-button-active" id="setZrrButton">Set</button>&nbsp;&nbsp;
-						<label for="sendZrrButton">Envoyer les coordonnées de la ZRR : </label>&nbsp;&nbsp;
+						<label for="setZrrButton">Définir les limites de la ZRR : </label>
+						<button class="pure-button pure-button-active" id="setZrrButton">Set</button>
+						<label for="sendZrrButton">Envoyer les coordonnées de la ZRR : </label>
 						<button class="pure-button pure-button-active" id="sendZrrButton">Send</button>
 					</fieldset>
 				</form>

@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "es2022",
+    "target": "es2022",
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true
+  },
+  "include": ["src/**/*", "types.d.ts"],
+  "exclude": ["node_modules"]
+}

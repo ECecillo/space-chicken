@@ -21,6 +21,7 @@
     }
   },
   "rules": {
+    "no-alert": "off",
     "no-unused-vars": [
       "error",
       {
