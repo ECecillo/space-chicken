@@ -123,7 +123,11 @@ public class UsersController {
           @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
 
   })
-  @CrossOrigin(origins = {"http://localhost:8080", "http://192.168.75.14", "https://192.168.75.14"})
+  @CrossOrigin(origins = {     "http://localhost:8080",
+                                 "http://localhost:3000",
+                                 "http://localhost:3376",
+                                 "http://192.168.75.14",
+                                 "https://192.168.75.14"})
   @GetMapping(path = "/users/{login}")
   public ResponseEntity<User> getUser(
   final @PathVariable String login) {
