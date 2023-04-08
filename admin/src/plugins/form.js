@@ -1,8 +1,8 @@
 // Initialisation
 import { updateMap } from './map.js';
+import { apiPath } from '../constants.js';
 
 const token = localStorage.getItem("token")
-const apiPath = "http://localhost:3000"
 
 // on s'assure de ne pas pouvoir entrer dans la page
 if (!token) {
@@ -72,17 +72,17 @@ async function sendZrr() {
 		mode: "cors",
 	};
 	try {
-		const response = await fetch(`${apiPath  }/admin/zrr`, requestConfig)
+		const response = await fetch(`${apiPath}/admin/zrr`, requestConfig)
 		if (response.status === 200) {
 			const data = await response.json()
 			console.log("mise à jour de la zrr réussi", data);
 			alert("Mise à jour de la zrr réussi");
 		} else {
 			console.log("erreur lors de la mise à jour de la zrr", "alert-danger");
-			throw new Error(`Bad response code (${  response.status  }).`);
+			throw new Error(`Bad response code (${response.status}).`);
 		}
 	} catch (error) {
-		console.error(`In zrr: ${  error}`);
+		console.error(`In zrr: ${error}`);
 	}
 }
 
@@ -104,7 +104,7 @@ async function setTtl() {
 		mode: "cors",
 	};
 	try {
-		const response = await fetch(`${apiPath  }/admin/ttl`, requestConfig)
+		const response = await fetch(`${apiPath}/admin/ttl`, requestConfig)
 		if (response.status === 204) {
 			console.log("mise à jour du ttl réussi");
 			alert("Mise à jour du ttl réussi");
@@ -112,22 +112,20 @@ async function setTtl() {
 
 		} else {
 			console.log("erreur lors de la mise à jour du ttl", "alert-danger");
-			throw new Error(`Bad response code (${  response.status  }).`);
+			throw new Error(`Bad response code (${response.status}).`);
 		}
 	} catch (error) {
-		console.error(`In ttl: ${  error}`);
+		console.error(`In ttl: ${error}`);
 	}
 }
 
-function initListeners(mymap) {
+function initListeners(map) {
 
 	// on initialise les valeurs du formulaire de lon, lat, zoom
-	const center = mymap.getCenter(); // récupère le centre de la carte après le déplacement
+	const center = map.getCenter(); // récupère le centre de la carte après le déplacement
 	updateLatValue(center.lat);
 	updateLonValue(center.lng);
-	updateZoomValue(mymap.getZoom());
-
-	console.log("TODO: add more event listeners...");
+	updateZoomValue(map.getZoom());
 
 	document.getElementById("lat").addEventListener("input", () => {
 		updateMapByForm();
@@ -143,7 +141,7 @@ function initListeners(mymap) {
 
 	document.getElementById("setZrrButton").addEventListener("click", () => {
 		// Récupère les coordonnées des coins supérieurs gauche et inférieur droit de la carte
-		const bounds = mymap.getBounds();
+		const bounds = map.getBounds();
 		const northWest = bounds.getNorthWest(); // coin supérieur gauche
 		const southEast = bounds.getSouthEast(); // coin inférieur droit
 		console.log('Coordonnées du coin supérieur gauche:', northWest);
@@ -171,17 +169,17 @@ async function getZRRandTTL() {
 		mode : "cors"
 	};
 	try {
-		const response = await fetch(`${apiPath  }/admin/`, requestConfig)
+		const response = await fetch(`${apiPath}/admin/`, requestConfig)
 		if (response.status === 200) {
 			const data = await response.json()
 			console.log("récupération de la zrr réussi", data.ZRR);
 			return data;
 		} 
 			console.log("erreur lors de la mise à jour de la zrr", "alert-danger");
-			throw new Error(`Bad response code (${  response.status  }).`);
+			throw new Error(`Bad response code (${response.status}).`);
 		
 	} catch (error) {
-		console.error(`In getZRRandTTL: ${  error}`);
+		console.error(`In getZRRandTTL: ${error}`);
 	}
 }
 async function getResources() {
@@ -194,7 +192,7 @@ async function getResources() {
 		mode : "cors"
 	};
 	try {
-		const response = await fetch(`${apiPath  }/api/resources/`, requestConfig)
+		const response = await fetch(`${apiPath}/api/resources/`, requestConfig)
 		if (response.status === 200) {
 			const data = await response.json()
 			console.log("récupération des ressources réussi", data);
@@ -205,10 +203,10 @@ async function getResources() {
 			window.location.href = "index.html"; // rediriger vers la page index
 		}
 			console.log("erreur lors de la mise à jour de la zrr", "alert-danger");
-			throw new Error(`Bad response code (${  response.status  }).`);
+			throw new Error(`Bad response code (${response.status}).`);
 		
 	} catch (error) {
-		console.error(`In getresources: ${  error}`);
+		console.error(`In getresources: ${error}`);
 	}
 }
 
