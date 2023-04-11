@@ -1,24 +1,29 @@
 <template>
-  <form id="loginForm">
-    <label for="login">Login :</label>
+  <h2>{{ message }}</h2>
+
+    <label for="login">Login :&nbsp;</label>
     <input type="text" name="login" id="login" />
     <br />
-    <label for="password">Password :</label>
+    <label for="password">Password :&nbsp;</label>
     <input type="password" name="password" id="password" />
     <br />
-    <button v-on:click="login">Send</button>
-  </form>
+    <button @click="$emit('loginEvent')">Send</button>
+
 </template>
 
 <script>
 export default {
   name: "Login",
+  props: {
+    message: String
+  },
   methods: {
     login: () => {
       console.log("Login cliqué.");
       //TODO qqch ici
     },
   },
+  emits: ['loginEvent']
 };
 </script>
 
@@ -26,8 +31,7 @@ export default {
 input,
 input[type="submit"],
 select {
-  background-color: #2f4f4f !important;
-  color: lightgray;
+  color: grey;
   border: 1px solid;
 }
 </style>
