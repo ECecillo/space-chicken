@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { NextFunction, Request, Response } from 'express';
 
 import { UserController } from '../controller/user/user.controller';
@@ -27,17 +28,16 @@ export const checkTokenMiddleware = async (
   try {
     const response = await UserController.authenticate(token);
     const userLogin = response.headers['x-space-chicken-login'];
-    if (response.status === 400) return res.status(400).send('Missing parameters');
-    if (response.status === 401)
-      return res.status(401).send('User authentication failed');
     if (response.status !== 204)
       return res.status(501).send('Not implemented handler');
     req.body.userLogin = userLogin;
     req.body.isAdmin = userLogin === 'admin';
     return next(); // Chain request.
   } catch (err) {
-    return res
-      .status(401)
-      .send('Your session has expired or your token is invalid.');
+    const { response } = err as AxiosError;
+    if (response?.status === 400) return res.status(400).send('Missing parameters');
+    if (response?.status === 401)
+      return res.status(401).send('User authentication failed');
+    return res.status(501).send('Not implemented handler');
   }
 };

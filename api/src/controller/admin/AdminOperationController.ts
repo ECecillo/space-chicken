@@ -65,5 +65,5 @@ export const handleTTLOperation = async (
   const { ttl: newTTL } = req.body;
   if (!newTTL || newTTL <= 0) return { status: 400, message: 'Invalid TTL' };
   await updateTTL(newTTL);
-  return { status: 204, message: 'TTL Successfully updated.' };
+  return { status: 204, message: '' };
 };
