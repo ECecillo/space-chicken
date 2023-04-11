@@ -5,21 +5,13 @@
       <strong>TODO :</strong> mettre à jour les positions des différents objets
       sur la carte.
     </p>
-    <div id="map" class="map"></div>
+    <div id="map" class="map" ref="map"></div>
   </section>
 </template>
 
 <script>
 import "leaflet/dist/leaflet.css";
-
-// This part resolves an issue where the markers would not appear in webpack
-import { Icon } from "leaflet";
-delete Icon.Default.prototype._getIconUrl;
-Icon.Default.mergeOptions({
-  iconRetinaUrl: require("leaflet/dist/images/marker-icon-2x.png"),
-  iconUrl: require("leaflet/dist/images/marker-icon.png"),
-  shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
-});
+//import { LMap, LTileLayer } from "@vue-leaflet/vue-leaflet";
 
 // initialisation de la map
 let lat = 45.782,
@@ -63,7 +55,7 @@ export default {
         tileSize: 512,
         zoomOffset: -1,
         accessToken:
-          "pk.eyJ1IjoibTFpZjEzIiwiYSI6ImNqczBubmhyajFnMnY0YWx4c2FwMmRtbm4ifQ.O6W7HeTW3UvOVgjCiPrdsA",
+          "pk.eyJ1IjoieGFkZXMxMDExNCIsImEiOiJjbGZoZTFvbTYwM29sM3ByMGo3Z3Mya3dhIn0.df9VnZ0zo7sdcqGNbfrAzQ",
       }
     ).addTo(mymap);
 
