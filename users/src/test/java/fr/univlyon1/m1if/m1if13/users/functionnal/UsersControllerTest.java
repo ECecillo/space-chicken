@@ -41,7 +41,7 @@ class UsersControllerTest {
                 .andExpect(status().isOk()) // 200 HTTP code.
                 .andExpect(content().string(containsString(
                         "[\"ECecillo\","
-                                + "\"Susan\","
+                                + "\"system\","
                                 + "\"Elfenwaar\","
                                 + "\"Melp\","
                                 + "\"John\","
@@ -62,7 +62,7 @@ class UsersControllerTest {
                 .andExpect(content().string(containsString(
                         "<Set>"
                                 + "<item>ECecillo</item>"
-                                + "<item>Susan</item>"
+                                + "<item>system</item>"
                                 + "<item>Elfenwaar</item>"
                                 + "<item>Melp</item>"
                                 + "<item>John</item>"
@@ -94,7 +94,7 @@ class UsersControllerTest {
                 .andExpect(content().string(containsString(
                         "[\"ECecillo\","
                         + "\"newUserJSON\","
-                        + "\"Susan\","
+                        + "\"system\","
                         + "\"Elfenwaar\","
                         + "\"Melp\","
                         + "\"John\","
@@ -127,7 +127,7 @@ class UsersControllerTest {
                                 + "<item>newUserXML</item>"
                                 + "<item>ECecillo</item>"
                                 + "<item>newUserJSON</item>"
-                                + "<item>Susan</item>"
+                                + "<item>system</item>"
                                 + "<item>Elfenwaar</item>"
                                 + "<item>Melp</item>"
                                 + "<item>John</item>"
@@ -203,7 +203,7 @@ class UsersControllerTest {
                 .andExpect(content().string(
                         containsString("[\"newUserXML\","
                                 + "\"ECecillo\","
-                                + "\"Susan\","
+                                + "\"system\","
                                 + "\"Elfenwaar\","
                                 + "\"Melp\","
                                 + "\"John\","
@@ -225,7 +225,7 @@ class UsersControllerTest {
                 .andExpect(content().string(containsString("User deleted successfully")));
         mockMvc.perform(get("/users"))
                 .andExpect(content().string(containsString("[\"ECecillo\","
-                        + "\"Susan\","
+                        + "\"system\","
                         + "\"Elfenwaar\","
                         + "\"Melp\","
                         + "\"John\","
@@ -252,14 +252,14 @@ class UsersControllerTest {
     @Test
     public void testCreateUserAlreadyExist() throws Exception {
         String json = "{"
-                + "\"login\":\"Susan\","
-                + "\"password\":\"password\","
+                + "\"login\":\"system\","
+                + "\"password\":\"system\","
                 + "\"species\":\"CHICKEN\","
                 + "\"image\":null"
                 + "}";
         String xml = "<user>"
-                + "<login>Susan</login>"
-                + "<password>password</password>"
+                + "<login>system</login>"
+                + "<password>system</password>"
                 + "<species>CHICKEN</species>"
                 + "<image>imageUrl</image>"
                 + "</user>";
@@ -322,14 +322,14 @@ class UsersControllerTest {
      */
     @Test
     public void testGetUserCors() throws Exception {
-        mockMvc.perform(get("/users/{name}", "Susan")
+        mockMvc.perform(get("/users/{name}", "system")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk()); // 200 HTTP without Origin.
-        mockMvc.perform(get("/users/{name}", "Susan")
+        mockMvc.perform(get("/users/{name}", "system")
                         .accept(MediaType.APPLICATION_JSON)
                 .header("Origin", "http://localhost:8080"))
                 .andExpect(status().isOk()); // 200 HTTP code when Origin is correct.
-        mockMvc.perform(get("/users/{name}", "Susan")
+        mockMvc.perform(get("/users/{name}", "system")
                         .accept(MediaType.APPLICATION_JSON)
                         .header("Origin", "http://wrong:8080"))
                 .andExpect(status().isForbidden()); // 403 HTTP code when Origin is incorrect.
