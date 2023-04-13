@@ -17,6 +17,7 @@
   "author": "CECILLON Enzo, LEDRU Romane, BOUDRAA Abdelhakim.",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "leaflet": "^1.9.3",
     "purecss": "^3.0.0"
   },

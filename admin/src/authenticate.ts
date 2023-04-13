@@ -1,3 +1,5 @@
+import { authPath } from './constants';
+
 export async function authenticateAdmin(password: string) {
   const headers = new Headers();
   headers.append('Content-Type', 'application/json');
@@ -15,7 +17,7 @@ export async function authenticateAdmin(password: string) {
   } as const;
 
   try {
-    const response = await fetch('http://localhost:8080/login', requestConfig);
+    const response = await fetch(`${authPath}/login`, requestConfig);
     if (response.status !== 204)
       throw new Error(
         `Connexion refusée ou impossible : Bad response code (${response.status}).`,
