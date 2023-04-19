@@ -15,7 +15,7 @@ export type Coordinates = {
 export type Resource = {
   id: string;
   position: Coordinates;
-  role: ResourceRole; // 'cow-boy' | 'chicken' | 'goldingue' | 'nest'
+  role: ResourceRole;
   ttl: number;
   nuggets: number;
   nests: number;

@@ -1,6 +1,7 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
+import cors from 'cors';
 
 import { serverPort } from './config/env.config';
 import { sendResponse } from './handlers/error/handle-error-response';
@@ -18,6 +19,8 @@ export const app = express();
 
 app.use(express.json()); // Permet de parser le body des requêtes.
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ origin: '*' })); // Permet de gérer les requêtes cross-origin (CORS).
+// Traite les requêtes issues du dossier public (http://localhost:3000/static/...)d'un serveur front.
 
 app.use('/static', express.static('public'));
 app.use('/api/resources', resources);

@@ -29,7 +29,7 @@
       "~~/*": ["./*"]
     }
   },
-  "types": ["node", "express"],
+  "types": ["node", "express", "jest"],
   "ts-node": {
     "require": ["tsconfig-paths/register"]
   },
