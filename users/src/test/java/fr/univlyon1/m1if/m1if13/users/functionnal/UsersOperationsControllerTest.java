@@ -38,8 +38,8 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Origin", "http://localhost:8080")
                         .content("{"
-                                + "\"login\":\"Susan\","
-                                + "\"password\":\"susanPassword\""
+                                + "\"login\":\"system\","
+                                + "\"password\":\"system\""
                                 + "}"))
                 .andExpect(status().isNoContent()); // 204 HTTP code for JSON request format.
     }
@@ -56,8 +56,8 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_XML)
                         .header("Origin", "http://localhost:8080")
                         .content("<user>"
-                                + "<login>Susan</login>"
-                                + "<password>susanPassword</password>"
+                                + "<login>system</login>"
+                                + "<password>system</password>"
                                 + "</user>"))
                 .andExpect(status().isNoContent()); // 204 HTTP code for XML request format.
     }
@@ -75,8 +75,8 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Origin", "http://localhost:8080")
                         .content("{"
-                                + "\"login\":\"Susan\","
-                                + "\"password\":\"susanPassword\""
+                                + "\"login\":\"system\","
+                                + "\"password\":\"system\""
                                 + "}"))
                 .andExpect(status().isNoContent()) // 204 HTTP code
                 .andReturn();
@@ -103,8 +103,8 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_XML)
                         .header("Origin", "http://localhost:8080")
                         .content("<user>"
-                                + "<login>Susan</login>"
-                                + "<password>susanPassword</password>"
+                                + "<login>system</login>"
+                                + "<password>system</password>"
                                 + "</user>"))
                 .andExpect(status().isNoContent()) // 204 HTTP code
                 .andReturn();
@@ -130,7 +130,7 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Origin", "http://localhost:8080")
                         .content("{"
-                                + "\"login\":\"Susan\""
+                                + "\"login\":\"system\""
                                 + "}"))
                 .andExpect(status().isNoContent()); // 204 HTTP code user correctly logged out.
     }
@@ -147,7 +147,7 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_XML)
                         .header("Origin", "http://localhost:8080")
                         .content("<user>"
-                                + "<login>Susan</login>"
+                                + "<login>system</login>"
                                 + "</user>"))
                 .andExpect(status().isNoContent()); // 204 HTTP code user correctly logged out.
     }
@@ -164,7 +164,7 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Origin", "http://localhost:8080")
                         .content("{"
-                                + "\"login\":\"Susan\","
+                                + "\"login\":\"system\","
                                 + "\"password\":\"wrongPassword\""
                                 + "}"))
                 .andExpect(status().isUnauthorized()); // 401 HTTP code
@@ -182,7 +182,7 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_XML)
                         .header("Origin", "http://localhost:8080")
                         .content("<user>"
-                                + "<login>Susan</login>"
+                                + "<login>system</login>"
                                 + "<password>wrongPassword</password>"
                                 + "</user>"))
                 .andExpect(status().isUnauthorized()); // 401 HTTP code
@@ -237,16 +237,16 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Origin", "http://localhost:8080")// correct origin.
                         .content("{"
-                                + "\"login\":\"Susan\","
-                                + "\"password\":\"susanPassword\""
+                                + "\"login\":\"system\","
+                                + "\"password\":\"system\""
                                 + "}"))
                 .andExpect(status().isNoContent()); // 204 HTTP code.
         mockMvc.perform(post("/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Origin", "http://wrong:8080")
                         .content("{"
-                                + "\"login\":\"Susan\","
-                                + "\"password\":\"susanPassword\""
+                                + "\"login\":\"system\","
+                                + "\"password\":\"system\""
                                 + "}"))
                 .andExpect(status().isForbidden()); // 403 HTTP code.
     }
@@ -264,16 +264,16 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_XML)
                         .header("Origin", "http://localhost:8080")// correct origin.
                         .content("<user>"
-                                + "<login>Susan</login>"
-                                + "<password>susanPassword</password>"
+                                + "<login>system</login>"
+                                + "<password>system</password>"
                                 + "</user>"))
                 .andExpect(status().isNoContent()); // 204 HTTP code.
         mockMvc.perform(post("/login")
                         .contentType(MediaType.APPLICATION_XML)
                         .header("Origin", "http://wrong:8080")
                         .content("<user>"
-                                + "<login>Susan</login>"
-                                + "<password>susanPassword</password>"
+                                + "<login>system</login>"
+                                + "<password>system</password>"
                                 + "</user>"))
                 .andExpect(status().isForbidden()); // 403 HTTP code.
     }
@@ -291,14 +291,14 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Origin", "http://localhost:8080")// correct origin.
                         .content("{"
-                                + "\"login\":\"Susan\""
+                                + "\"login\":\"system\""
                                 + "}"))
                 .andExpect(status().isNoContent()); // 204 HTTP code.
         mockMvc.perform(post("/logout")
                         .contentType(MediaType.APPLICATION_JSON)
                         .header("Origin", "http://wrong:8080")
                         .content("{"
-                                + "\"login\":\"Susan\""
+                                + "\"login\":\"system\""
                                 + "}"))
                 .andExpect(status().isForbidden()); // 403 HTTP code.
     }
@@ -316,14 +316,14 @@ class UsersOperationsControllerTest {
                         .contentType(MediaType.APPLICATION_XML)
                         .header("Origin", "http://localhost:8080")// correct origin.
                         .content("<user>"
-                                + "<login>Susan</login>"
+                                + "<login>system</login>"
                                 + "</user>"))
                 .andExpect(status().isNoContent()); // 204 HTTP code.
         mockMvc.perform(post("/logout")
                         .contentType(MediaType.APPLICATION_XML)
                         .header("Origin", "http://wrong:8080")
                         .content("<user>"
-                                + "<login>Susan</login>"
+                                + "<login>system</login>"
                                 + "</user>"))
                 .andExpect(status().isForbidden()); // 403 HTTP code.
     }
