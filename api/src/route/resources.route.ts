@@ -6,6 +6,8 @@ import { checkTokenMiddleware } from '../middleware/check-token-middleware';
 import { updatePositionOrCreateUser } from '../services/resources-service';
 import { MiddlewarePayload, TypedRequestBody } from '../types/express.type';
 import { Coordinates } from '../types/resources.type';
+import { getZRRFromAppConfig } from '~~/services/admin-service';
+import { startDate } from '~~/server';
 
 const router = express.Router();
 
@@ -13,9 +15,16 @@ const router = express.Router();
  * Returns an array containing the representations of all existing
  *  resources in the game.
  */
-router.get('/', checkTokenMiddleware, async (_, res) =>
-  res.status(200).send(resources),
-);
+router.get('/', checkTokenMiddleware, async (_, res) => {
+  const startDateSec = Math.floor(startDate / 1000);
+  const actualDate = Math.floor(Date.now() / 1000);
+  return res.status(200).send(
+    resources.map((resource) => ({
+      ...resource,
+      ttl: Math.max(0, resource.ttl + startDateSec - actualDate),
+    })),
+  );
+});
 
 /**
  * /resources/{resourceId}
@@ -38,13 +47,12 @@ router.put(
     req: TypedRequestBody<{ position: Coordinates } & MiddlewarePayload>,
     res,
   ) => {
-    const { position: newUserPosition, userLogin: userSpring, isAdmin } = req.body;
+    const { position: newUserPosition, userLogin: userSpring } = req.body;
     if (!newUserPosition || !newUserPosition.latitude || !newUserPosition.longitude)
       return res.status(400).send('Invalid position object');
 
     const { userLogin } = req.params;
-    if (!isAdmin && userLogin !== userSpring)
-      return res.status(401).send('Forbidden Operation');
+    if (userLogin !== userSpring) return res.status(401).send('Forbidden Operation');
     try {
       const result = await updatePositionOrCreateUser(
         resources,
@@ -57,5 +65,14 @@ router.put(
     }
   },
 );
+
+/**
+ * /resources/zrr
+ * Send current Zrr position
+ */
+router.get('/zrr', checkTokenMiddleware, async (_, res) => {
+  const zrr = await getZRRFromAppConfig();
+  return res.status(200).send(zrr);
+});
 
 export default router;
