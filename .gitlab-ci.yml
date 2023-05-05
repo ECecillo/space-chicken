@@ -1,10 +1,11 @@
 # Cache downloaded dependencies and plugins between builds.
 # Not strictly necessary, but speeds up the builds.
 stages:
-  - test
-  - deploy_spring
-  - deploy_node
-  - deploy_nginx
+  - test_api_servers
+  - deploy_spring_backend
+  - deploy_express_app_api
+  - deploy_admin_client
+  - deploy_vite_client
 
 default:
   image: node:18.15
@@ -20,11 +21,12 @@ variables:
   # Use the cached directory above.
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
 
-test-server:
-  stage: test
+test_spring_users_api:
+  stage: test_api_servers
   image: maven:3.8.3-openjdk-17
   only:
     - main
+
   before_script:
     # The runners on the forge need a proxy to access the web. mvn
     # ignores the $http_proxy & friends variable => write a
@@ -35,30 +37,52 @@ test-server:
   script:
     - cd users/ && mvn test --batch-mode
 
-deploy_spring:
-  stage: deploy_spring
+test_express_app_api:
+  stage: test_api_servers
+  only:
+    - main
+
+  script:
+    - cd api/ && npm install --include=dev && npm run test:production # unoptimized but should do the work.
+
+
+deploy_spring_backend:
+  stage: deploy_spring_backend
   image: maven:3.8.3-openjdk-17
   before_script:
     - . ci/setup-mvn-proxy.sh && chmod 400 $CI_SSH_KEY
   only:
     - main
+
   script:
     - cd users && mvn clean package && scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY target/users.war gitlabci@192.168.75.14:/opt/tomcat/webapps/users.war
 
-deploy_node:
-  stage: deploy_node
+deploy_express_app_api:
+  stage: deploy_express_app_api
   before_script:
-    - . ci/setup-mvn-proxy.sh && chmod 400 $CI_SSH_KEY && chmod +x api/deploy_production.sh
+    - chmod 400 $CI_SSH_KEY && chmod +x api/deploy_production.sh
   only:
     - main
+
   script:
     - cd api/ && ./deploy_production.sh
 
-deploy_nginx:
-  stage: deploy_nginx
+deploy_admin_client:
+  stage: deploy_admin_client
   before_script:
     - chmod 400 $CI_SSH_KEY && chmod +x admin/deploy_admin_client.sh
   only:
     - main
+
   script:
     - cd admin && ./deploy_admin_client.sh
+
+deploy_vite_client:
+  stage: deploy_vite_client
+  before_script:
+    - chmod 400 $CI_SSH_KEY && chmod +x client/deploy_vite_client.sh
+  only:
+    - main
+
+  script:
+    - cd client && ./deploy_vite_client.sh

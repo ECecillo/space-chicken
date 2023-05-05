@@ -9,8 +9,8 @@ export const useAuthStore = defineStore({
   state: () => ({
     // check user in local storage for authentication and stay logged in if token is valid
     user: {
-      login : JSON.parse(localStorage.getItem('login')),
-      token: JSON.parse(localStorage.getItem('token')),
+      login : localStorage.getItem('login'),
+      token: localStorage.getItem('token'),
   }}),
   actions: {
     async login(login, password) {
@@ -26,11 +26,8 @@ export const useAuthStore = defineStore({
       };
 
       // store user details and jwt in local storage to keep user logged in between page refreshes
-      localStorage.setItem('login', JSON.stringify(login));
-      localStorage.setItem('token', JSON.stringify(userAuthentificationResponse.headers.get('Authorization')));
-
-
-      //Todo : Quand on sera en 401 unauthorized mais déjà connected, faut delog l'utilisateur
+      localStorage.setItem('login', login);
+      localStorage.setItem('token', userAuthentificationResponse.headers.get('Authorization'));
 
       // redirect to previous url or default to home page
       await router.push('/');
@@ -39,7 +36,6 @@ export const useAuthStore = defineStore({
       this.user = null;
       localStorage.removeItem('login');
       localStorage.removeItem('token');
-      router.push('/login');
     }
   }
 });

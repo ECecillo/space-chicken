@@ -6,7 +6,12 @@ import java.util.Set;
 import javax.naming.AuthenticationException;
 import javax.naming.NameAlreadyBoundException;
 
-import fr.univlyon1.m1if.m1if13.dto.model.user.*;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserCreateDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserLoginDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserInfoDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserLogoutDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserPasswordDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;

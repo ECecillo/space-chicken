@@ -3,11 +3,10 @@ import express from 'express';
 import { handleResourceOperation } from '../controller/resources/operations/ResourcesOperationController';
 import resources from '../data/resources.fixtures';
 import { checkTokenMiddleware } from '../middleware/check-token-middleware';
+import { getZRRFromAppConfig } from '../services/admin-service';
 import { updatePositionOrCreateUser } from '../services/resources-service';
 import { MiddlewarePayload, TypedRequestBody } from '../types/express.type';
 import { Coordinates } from '../types/resources.type';
-import { getZRRFromAppConfig } from '~~/services/admin-service';
-import { startDate } from '~~/server';
 
 const router = express.Router();
 
@@ -16,12 +15,14 @@ const router = express.Router();
  *  resources in the game.
  */
 router.get('/', checkTokenMiddleware, async (_, res) => {
-  const startDateSec = Math.floor(startDate / 1000);
   const actualDate = Math.floor(Date.now() / 1000);
   return res.status(200).send(
     resources.map((resource) => ({
       ...resource,
-      ttl: Math.max(0, resource.ttl + startDateSec - actualDate),
+      ttl: Math.max(
+        0,
+        resource.ttl + Math.floor(resource.dateCreation / 1000) - actualDate,
+      ),
     })),
   );
 });

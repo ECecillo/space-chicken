@@ -1,14 +1,19 @@
 import express from 'express';
 
 import {
-  generateGoldingue,
+  generateOneGoldingue,
   handleTTLOperation,
   handleZRROperation,
 } from '../controller/admin/AdminOperationController';
 import resources from '../data/resources.fixtures';
 import { checkTokenMiddleware } from '../middleware/check-token-middleware';
 import { getAllPropertiesFromAppConfig } from '../services/admin-service';
-import { AdminRequestPayload, AdminZRRUpdateRequestType } from '../types/admin.type';
+import {
+  AdminCreateOneGoldingueRequestType,
+  AdminRequestPayload,
+  AdminZRRUpdateRequestType,
+} from '../types/admin.type';
+import { isDefined } from '../utils/is-null-or-undefined';
 
 const router = express.Router();
 
@@ -22,14 +27,19 @@ router.get('/', checkTokenMiddleware, async (req: AdminRequestPayload, res) => {
 });
 
 /**
- * Create a new goldingue if user is root with random position in ZRR.
+ * Create a new goldingue with position if user is root.
  */
 router.post(
   '/goldingue',
   checkTokenMiddleware,
-  async (req: AdminRequestPayload, res) => {
+  async (req: AdminCreateOneGoldingueRequestType, res) => {
     if (!req.body.isAdmin) return res.status(403).send('You need to be root');
-    const goldingueCreated = await generateGoldingue(resources);
+    if (
+      !isDefined(req.body.position?.latitude) ||
+      !isDefined(req.body.position?.longitude)
+    )
+      return res.status(400).send('Invalid position object');
+    const goldingueCreated = await generateOneGoldingue(resources, req);
     res.status(200).send(goldingueCreated);
   },
 );

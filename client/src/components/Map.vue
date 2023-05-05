@@ -27,7 +27,7 @@ const icons = {
 export default {
   name: "Map",
   props: {
-    markers: {
+    resources: {
       type: Array,
       required: true
     },
@@ -47,27 +47,37 @@ export default {
       zoom: 19,
       map: null,
       markersLayer: null,
+      currentMarkerConsulted: null,
     }
   },
   methods: {
     // Charge les makers sur la map
-    addMarkers: function (latitudeMarker, longitudeMaker, name, image, icon, score, ttl) {
+    addMarker: function (latitudeMarker, longitudeMaker, name, image, icon, score, ttl, role) {
       const dist = GeoUtils.getDistanceFromLatLonInKm(
           useUserStore().user.position.latitude,
           useUserStore().user.position.longitude,
           latitudeMarker,
           longitudeMaker,
       );// Récupère la distance entre le joueur courant et la ressource pour l'afficher dans le popup.
+      const Onemarker = marker(
+        [latitudeMarker, longitudeMaker],
+        {
+          icon: icon,
+          title: name,
+        }).addTo(this.map)
 
-      this.markersLayer.addLayer(
-          marker(
-          [latitudeMarker, longitudeMaker],
-          {
-            icon: icon,
-          }).addTo(this.map)
-          .bindPopup(`
-          <img src="${image}" alt="${name}" width="30" height="30"><div>TLL : ${ttl}</div>
-          <div>Name = ${name}<br> Distance = ${dist} mètres</div><br>Score = ${score}`));
+      if(role === "goldingue" ) {
+        Onemarker.bindPopup(`
+          <img src="${image}" alt="${name}" width="30" height="30"><div>Role : ${role}</div><div>TLL : ${ttl}</div>
+          <div>Name = ${name}<br> Distance = ${dist} mètres</div><br>Score = ${score}`);
+      } else {
+        Onemarker.bindPopup(`
+          <img src="${image}" alt="${name}" width="30" height="30"><div>Role : ${role}</div>
+          <div>Name = ${name}<br> Distance = ${dist} mètres</div><br>Score = ${score}`);
+      }
+
+      this.markersLayer.addLayer(Onemarker);
+      return Onemarker;
     },
   },
   mounted() {
@@ -108,67 +118,84 @@ export default {
     this.map.on('click', (e) => {
       this.lat = e.latlng.lat;
       this.lng = e.latlng.lng;
+      this.currentMarkerConsulted = null;
     });
 
     // Ajout des markers
-    this.markers.map(marker => {
-      this.addMarkers(
-          marker.latitude,
-          marker.longitude,
-          marker.name,
-          marker.image? marker.image : icons[marker.role],
-          icons[marker.role],
-          marker.score,
-          marker.tll,
+    this.resources.map(resource => {
+      this.addMarker(
+        resource.latitude,
+        resource.longitude,
+        resource.name,
+        resource.image? resource.image : icons[resource.role],
+          icons[resource.role],
+        resource.score,
+        resource.tll,
+        resource.role,
       );
     });
 
     // Ajout du joueur courant
-    this.addMarkers(
+    this.addMarker(
         this.user.position.latitude,
         this.user.position.longitude,
         this.user.name,
         this.user.image? this.user.image : icons[this.user.role],
-        icon({ iconUrl: userImage, iconSize: [30, 30]}),
+        icons[this.user.role],
         this.user.score,
         this.user.tll,
+        this.user.role,
     );
 
-    let latlngs = [];
     // Ajout de la ZRR
+    let latlngs = [];
     this.zrr.map( (corner) => {
         latlngs.push([corner.latitude, corner.longitude]);
     });
     let polygonZrr = polygon(latlngs, {color: 'red'});
     this.markersLayer.addLayer(polygonZrr);
     this.map.fitBounds(polygonZrr.getBounds());
+
+    // Listener sur la popup Event pour la réafficher
+    this.map.on('popupopen', (e) => {
+      this.currentMarkerConsulted = e.popup._source.options.title; // Récupère le nom du marker affiché
+    });
   },
   updated() {
     // Suppression des markers clear map
     this.markersLayer.clearLayers();
 
     // Réajout du marker du joueur
-    this.addMarkers(
+    const marker = this.addMarker(
         this.user.position.latitude,
         this.user.position.longitude,
         this.user.name,
         this.user.image? this.user.image : icons[this.user.role],
-        icon({ iconUrl: userImage, iconSize: [30, 30]}),
+          icons[this.user.role],
         this.user.score,
         this.user.tll,
+        this.user.role,
     );
+    if (this.currentMarkerConsulted === marker.options.title){
+      marker.openPopup();
+    }
+
 
     // Réajout des markers actualisés
-    this.markers.map(marker => {
-      this.addMarkers(
-          marker.latitude,
-          marker.longitude,
-          marker.name,
-          marker.image? marker.image : icons[marker.role],
-          icons[marker.role],
-          marker.score,
-          marker.tll,
+    this.resources.forEach(resource => {
+      const marker = this.addMarker(
+        resource.latitude,
+        resource.longitude,
+        resource.name,
+        resource.image? resource.image : icons[resource.role],
+          icons[resource.role],
+        resource.score,
+        resource.tll,
+        resource.role,
       );
+      if (this.currentMarkerConsulted === marker.options.title){
+        marker.openPopup();
+      }
     });
 
     // Réajout de la ZRR

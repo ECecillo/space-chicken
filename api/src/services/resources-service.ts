@@ -32,6 +32,7 @@ export const createNewPlayer = async (
     nests: 0,
     ttl: 0,
     nuggets: 0,
+    dateCreation: Date.now(),
   };
   const newResourcesLength = resources.push(newResource);
   return resources.at(newResourcesLength - 1);
@@ -48,5 +49,5 @@ export const updatePositionOrCreateUser = async (
     return { status: 201, message: 'New Resource created.' };
   }
   userStored!.position = newCoordinates;
-  return { status: 204, message: '' };
+  return { status: 204, message: 'New resource' };
 };
