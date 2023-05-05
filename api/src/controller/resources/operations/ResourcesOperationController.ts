@@ -1,8 +1,5 @@
 import { OperationType } from '../../../model/enum';
-import {
-  createNewPlayer,
-  findFirstResourceById,
-} from '../../../services/resources-service';
+import { findFirstResourceById } from '../../../services/resources-service';
 import { MiddlewarePayload, TypedRequestBody } from '../../../types/express.type';
 import {
   Resource,
@@ -17,17 +14,19 @@ type VerifyOperationRetunedPayload = { status: number; message: string };
 const verifyGrabNuggetOperationIsValidForPlayer = (
   player: Resource,
 ): VerifyOperationRetunedPayload => {
-  if (player.role !== 'cow-boy')
+  if (player.role !== 'cow-boy') {
     return { status: 400, message: 'Invalid operation type for this user.' };
-  return { status: 202, message: '' };
+  }
+  return { status: 202, message: 'Player authorized to build.' };
 };
 
 const verifyBuildNestOperationIsValidForPlayer = (
   player: Resource,
 ): VerifyOperationRetunedPayload => {
-  if (player.role !== 'chicken')
+  if (player.role !== 'chicken') {
     return { status: 400, message: 'Invalid operation type for this user.' };
-  return { status: 202, message: '' };
+  }
+  return { status: 202, message: 'Player authorized to build.' };
 };
 
 export async function handleResourceOperation(
@@ -42,23 +41,18 @@ export async function handleResourceOperation(
   if (goldingueFound.ttl <= 0)
     return { status: 403, message: 'The goldingue plant can not be use anymore.' };
 
-  let player = await findFirstResourceById(resources, userLogin);
+  const player = await findFirstResourceById(resources, userLogin);
   if (!player) {
-    const result = await createNewPlayer(
-      resources,
-      userLogin,
-      goldingueFound.position,
-    );
-    if (!result) return { status: 404, message: 'User not found in the app' };
-    player = result;
+    return { status: 404, message: 'User not found in the app' };
   }
 
   const distanceBetweenPlayerAndGoldingue = distance(
     player.position,
     goldingueFound.position,
   );
-  if (distanceBetweenPlayerAndGoldingue >= 5)
+  if (distanceBetweenPlayerAndGoldingue >= 5) {
     return { status: 403, message: 'User too far from resource to modify it.' };
+  }
 
   switch (operationType) {
     case OperationType['grab gold nugget']:
@@ -66,14 +60,16 @@ export async function handleResourceOperation(
         verifyGrabNuggetOperationIsValidForPlayer(player);
       if (validOperationForCOWBOY.status !== 202) return validOperationForCOWBOY;
       player.nuggets += 1;
+      goldingueFound.ttl = 0;
       goldingueFound.role = ResourceRole.NUGGETS;
       break;
     case OperationType['build nest']:
       const validOperationForCHICKEN =
         verifyBuildNestOperationIsValidForPlayer(player);
       if (validOperationForCHICKEN.status !== 202) return validOperationForCHICKEN;
-      goldingueFound.role = ResourceRole.NEST;
       player.nests += 1;
+      goldingueFound.ttl = 0;
+      goldingueFound.role = ResourceRole.NEST;
       break;
     default:
       return {
@@ -81,6 +77,5 @@ export async function handleResourceOperation(
         message: 'Invalid operation type or not a goldingue plant',
       };
   }
-
-  return { status: 204, message: '' };
+  return { status: 204, message: 'Resource captured !' };
 }

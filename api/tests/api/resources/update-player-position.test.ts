@@ -7,7 +7,7 @@ import { signInUser } from '../../utils';
 const server = express();
 server.use(express.json());
 server.use('/api/resources', router);
-const app = server.listen(3001);
+const app = server.listen(3832);
 
 describe('PUT /resources/:userLogin/position', () => {
   let token: string;

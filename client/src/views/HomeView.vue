@@ -1,7 +1,7 @@
 <script setup>
 import Base from '../components/Base.vue';
 
-const user = localStorage.getItem('login')?.slice(1, -1);
+const user = localStorage.getItem('login');
 </script>
 
 <template>

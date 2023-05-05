@@ -3,7 +3,10 @@ import {
   updateTTL,
   updateZRR,
 } from '../../services/admin-service';
-import { AdminZRRUpdateRequestType } from '../../types/admin.type';
+import {
+  AdminCreateOneGoldingueRequestType,
+  AdminZRRUpdateRequestType,
+} from '../../types/admin.type';
 import { TypedRequestBody } from '../../types/express.type';
 import {
   Coordinates,
@@ -12,25 +15,27 @@ import {
   ResourcesStore,
 } from '../../types/resources.type';
 import getRectangleGPSPoints from '../../utils/calculate-rectangle-from-two-coordinate';
-import generateRandomCoordinate from '../../utils/random-coordinates-given-area';
 
 const isValidCoord = (coordinateObject: Coordinates) =>
   coordinateObject && coordinateObject.latitude && coordinateObject.longitude;
 
 /*
- * Generate a new goldingue, add it to the ResourcesStore and return it.
+ * Generate a new goldingue with a given position, add it to the ResourcesStore and return it.
  */
-export const generateGoldingue = async (
+export const generateOneGoldingue = async (
   resources: ResourcesStore,
+  req: AdminCreateOneGoldingueRequestType,
 ): Promise<Resource> => {
-  const { TTL, ZRR } = await getAllPropertiesFromAppConfig();
+  const date = Date.now();
+  const { TTL } = await getAllPropertiesFromAppConfig();
   const newGoldingue = {
     id: `goldingue${Math.floor(Math.random() * 30000)}`, // 30 000 max.
     role: ResourceRole.GOLDINGUE,
-    position: generateRandomCoordinate(ZRR[0], ZRR[1]),
+    position: req.body.position,
     ttl: TTL,
     nests: 0,
     nuggets: 0,
+    dateCreation: date,
   };
   resources.push(newGoldingue);
   return newGoldingue;

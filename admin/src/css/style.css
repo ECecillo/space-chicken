@@ -72,6 +72,14 @@ button {
   border-radius: 5px !important;
 }
 
+
+.input-flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
 .elanor {
   font-family: _h2_;
   text-align: right;
@@ -82,6 +90,15 @@ button {
   border: 1px solid;
   padding: 5px;
   width: 100%;
+}
+
+.split-content {
+  background-color: #081f1f;
+  border: 1px solid;
+  padding: 5px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 }
 
 .icon {

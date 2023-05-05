@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" xmlns="http://www.w3.org/1999/html">
     <head>
 		<meta charset="UTF-8">
         <title>Des Poules et des Cow-Boys - Confidentiel</title>
@@ -9,6 +9,7 @@
 			crossorigin=""/>
 		<script src="dist/js/admin.bundle.js"></script>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="shortcut icon" href="#">
 	</head>
     <body class="b">
 		<header>
@@ -20,7 +21,7 @@
 		<section>
 			<h2>Position</h2>
 			<div class="content">
-				<p><strong>COORDONNEES : </strong>Centre de la ZRR</p>
+				<p><strong>COORDONNEES : </strong>Click sur la carte</p>
 				<form onsubmit="return false;" class="pure-form">
 					<fieldset style="display: flow-root;">
 						<label for="currentLatitude">Latitude : </label>
@@ -42,31 +43,56 @@
 		</section>
 
 		<section>
-			<h2>ZRR</h2>
-			<div class="content">
-				<p><strong>COORDONNEES : </strong>Set les coordonnées de la carte actuelle.</p>
-				<form id="setCorner" onsubmit="return false;" class="pure-form">
-					<fieldset>
-						<label for="northWestLatitude">Latitude : </label>
-						<input type="text" id="northWestLatitude" name="northWestLatitude">
-
-						<label for="northWestLongitude">Longitude : </label>
-						<input type="text" id="northWestLongitude" name="northWestLongitude">
-					</fieldset>
-					<fieldset>
-						<label for="southEastLatitude">Latitude : </label>
-						<input type="text" id="southEastLatitude" name="southEastLatitude">
-
-						<label for="southEastLongitude">Longitude : </label>
-						<input type="text" id="southEastLongitude" name="southEastLongitude">
-					</fieldset>
-					<fieldset>
-						<label for="setZrrButton">Définir les limites de la ZRR : </label>
-						<button class="pure-button pure-button-active" id="setZrrButton">Set</button>
-						<label for="sendZrrButton">Envoyer les coordonnées de la ZRR : </label>
-						<button class="pure-button pure-button-active" id="sendZrrButton">Send</button>
-					</fieldset>
-				</form>
+			<h2>Configuration</h2>
+			<div class="split-content">
+				<div id="createGoldingue">
+					<p><strong>GOLDINGUE : </strong>Créer une ou plusieurs goldingues.</p>
+					<form id="setGoldingue" onsubmit="return false;" class="pure-form">
+						<fieldset>
+							<p>Créer une seule goldingue (click sur la carte)</p>
+							<div class="input-flex">
+								<label for="goldingueLatitude">Latitude &nbsp;&nbsp;&nbsp;:</label>
+								<input type="text" id="goldingueLatitude" name="goldingueLatitude" required><br>
+							</div>
+							<div class="input-flex">
+								<label for="goldingueLongitude">Longitude :</label>
+								<input type="text" id="goldingueLongitude" name="goldingueLongitude" required><br>
+							</div>
+							<button class="pure-button pure-button-active" id="setGoldingueButton">Set</button>
+							<button class="pure-button pure-button-active" id="sendOneGoldingueButton">Send</button>
+						</fieldset>
+					</form>
+				</div>
+				<div id="zrr">
+					<p><strong>COORDONNEES : </strong>Définir la ZRR avec la carte ci-dessus:</p>
+					<form id="setCorner" onsubmit="return false;" class="pure-form">
+						<fieldset>
+							<div class="input-flex">
+								<label for="northWestLatitude">Latitude NO : </label>
+								<input type="text" id="northWestLatitude" name="northWestLatitude" required>
+							</div>
+							<div class="input-flex">
+								<label for="northWestLongitude">Longitude NO : </label>
+								<input type="text" id="northWestLongitude" name="northWestLongitude" required>
+							</div>
+						</fieldset>
+						<fieldset>
+							<div class="input-flex">
+								<label for="southEastLatitude">Latitude SE : </label>
+								<input type="text" id="southEastLatitude" name="southEastLatitude" required>
+							</div>
+							<div class="input-flex">
+								<label for="southEastLongitude">Longitude SE : </label>
+								<input type="text" id="southEastLongitude" name="southEastLongitude" required>
+							</div>
+						</fieldset>
+						<div>Note : la zone de jeu sera définie par ces 2 coordonnées comme un RECTANGLE.</div>
+						<fieldset>
+							<button class="pure-button pure-button-active" id="setZrrButton">Set</button>
+							<button class="pure-button pure-button-active" id="sendZrrButton">Send</button>
+						</fieldset>
+					</form>
+				</div>
 			</div>
 		</section>
 
@@ -75,7 +101,7 @@
 			<div class="content">
 				<form id="setTtl" onsubmit="return false;" class="pure-form">
 					<fieldset>
-						<label for="ttl">Temps de Tourner en Long (TTL) par défaut : </label> <input type="number" min="0" max="180" value="60" id="ttl" name="ttl">&nbsp;&nbsp;
+						<label for="ttl">Temps de Tourner en Long (TTL) par défaut : </label> <input type="number" min="0" max="2000" value="60" id="ttl" name="ttl">&nbsp;&nbsp;
 						<button id="setTtlButton" class="pure-button pure-button-active">Set</button>
 					</fieldset>
 				</form>
@@ -83,9 +109,9 @@
 		</section>
 
 		<section>
-			<p><strong>Credits:</strong> Fonts by 
-				<span style="font-family: _h1_"><a href="https://www.creativefabrica.com/product/rockly/ref/453441/">Share Font</a></span>, 
-				<span style="font-family: _h2_"><a href="https://krakenbox.net/product/grozel-gaming-display-font/">Yahdi Kumala</a></span> and 
+			<p><strong>Credits:</strong> Fonts by
+				<span style="font-family: _h1_"><a href="https://www.creativefabrica.com/product/rockly/ref/453441/">Share Font</a></span>,
+				<span style="font-family: _h2_"><a href="https://krakenbox.net/product/grozel-gaming-display-font/">Yahdi Kumala</a></span> and
 				<span style="font-family: _normal_"><a href="https://www.dafont.com/img/illustration/m/u/munson.png">Paul Miller</a></span>.</p>
 		</section>
   </body>
