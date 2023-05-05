@@ -9,6 +9,7 @@ import fr.univlyon1.m1if.m1if13.dto.model.user.UserCreateDto;
 import fr.univlyon1.m1if.m1if13.dto.model.user.UserDto;
 import fr.univlyon1.m1if.m1if13.dto.model.user.UserLoginDto;
 import fr.univlyon1.m1if.m1if13.dto.model.user.UserLogoutDto;
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserInfoDto;
 import fr.univlyon1.m1if.m1if13.dto.model.user.UserPasswordDto;
 import fr.univlyon1.m1if.m1if13.exeption.EmptyParamException;
 import fr.univlyon1.m1if.m1if13.exeption.UserNotFoundException;
@@ -76,6 +77,16 @@ public interface UserServiceInterface {
    *                               payload.
    */
   void changePassword(String login, UserPasswordDto userDto) throws UserNotFoundException;
+
+  /**
+   * Update the user password.
+   *
+   * @param login   user login.
+   * @param userDto Mapped user parameters passed in the query.
+   * @throws UserNotFoundException if we could not find the user with the mapped
+   *                               payload.
+   */
+  void changeInfos(String login, UserInfoDto userDto) throws UserNotFoundException;
 
   /**
    * Check if the JWT is valid and correspond to a user in the DAO.
