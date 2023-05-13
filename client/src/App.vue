@@ -1,36 +1,12 @@
 <script>
-export default {
-  data() {
-    return {
-      logged: localStorage.getItem('token') ? true : false,
-      loginMessage: ''
-    }
-  },
-  methods: {
-    updateData({ loggedIn, loginMessage }) {
-      if (loggedIn) {
-        // Mettez à jour votre variable pour indiquer que l'utilisateur est connecté
-        this.loginMessage = loginMessage
-        this.logged = true
-      } else {
-        this.loginMessage = loginMessage
-      }
-    },
-    logout() {
-      // Mettre à jour votre variable pour indiquer que l'utilisateur est déconnecté
-      localStorage.removeItem('token')
-      localStorage.removeItem('login')
-      this.logged = false
-      this.loginMessage = 'You are logged out.'
-    }
-  }
-}
 </script>
 
 <script setup>
-import { RouterLink } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-import Login from './components/Login.vue'
+import { RouterLink, RouterView } from 'vue-router';
+import { useAuthStore } from './stores/authentification';
+
+const authStore = useAuthStore();
+const user = authStore.user;
 </script>
 
 <template>
@@ -38,21 +14,21 @@ import Login from './components/Login.vue'
     <header>
       <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
-      <div class="wrapper">
-        <nav>
-          <RouterLink to="/">Home</RouterLink>
-          <RouterLink to="/about">About</RouterLink>
+      <div id="nav" class="wrapper">
+        <nav v-show="user" >
+          <RouterLink to="/" class="nav-item nav-link">Home</RouterLink>
+          <RouterLink to="/map" class="nav-item nav-link">My map</RouterLink>
+          <RouterLink to="/profile" class="nav-item nav-link">Profile</RouterLink>
+          <a @click="authStore.logout()" class="nav-item nav-link">Logout</a>
         </nav>
       </div>
     </header>
-    <br>
-    <HelloWorld :msg="loginMessage" />
-    <br>
-    <Login v-if="!logged" :message="loginMessage" @update-data="updateData" />
-    <div v-else>
-      <button @click="logout">Logout</button>
-    </div>
-    </div>
+
+    <main id="content">
+      <router-view />
+    </main>
+
+  </div>
 </template>
 
 <style scoped>

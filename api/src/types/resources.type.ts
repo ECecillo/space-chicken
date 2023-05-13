@@ -5,6 +5,7 @@ export enum ResourceRole {
   CHICKEN = 'chicken',
   GOLDINGUE = 'goldingue',
   NEST = 'nest',
+  NUGGETS = 'nuggets',
 }
 
 export type Coordinates = {
