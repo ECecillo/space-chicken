@@ -4,7 +4,11 @@ import {
   findFirstResourceById,
 } from '../../../services/resources-service';
 import { MiddlewarePayload, TypedRequestBody } from '../../../types/express.type';
-import { Resource, ResourcesStore } from '../../../types/resources.type';
+import {
+  Resource,
+  ResourceRole,
+  ResourcesStore,
+} from '../../../types/resources.type';
 import distance from '../../../utils/distance-between-two-coordinates';
 
 type IncrementPlayerResource = MiddlewarePayload & { operationType: string };
@@ -62,14 +66,14 @@ export async function handleResourceOperation(
         verifyGrabNuggetOperationIsValidForPlayer(player);
       if (validOperationForCOWBOY.status !== 202) return validOperationForCOWBOY;
       player.nuggets += 1;
-      goldingueFound.ttl -= 1;
+      goldingueFound.role = ResourceRole.NUGGETS;
       break;
     case OperationType['build nest']:
       const validOperationForCHICKEN =
         verifyBuildNestOperationIsValidForPlayer(player);
       if (validOperationForCHICKEN.status !== 202) return validOperationForCHICKEN;
+      goldingueFound.role = ResourceRole.NEST;
       player.nests += 1;
-      goldingueFound.ttl -= 1;
       break;
     default:
       return {
