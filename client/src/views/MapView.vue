@@ -4,47 +4,59 @@
     <div v-if="isLoading">Loading...</div>
     <div v-else-if="isError()">Error, please reload page or contact dev</div>
     <template v-else>
-      <h4> SCORE ACTUEL : {{ getUserProfile().score }}</h4>
-      <Map :resources="getResourcesForMarkers()" :zrr="getZrr()" :user="getUserProfile()"/>
+      <h4>SCORE ACTUEL : {{ getUserProfile().score }}</h4>
+      <Map :resources="getResourcesForMarkers()" :zrr="getZrr()" :user="getUserProfile()" />
+      <VibrationView :show="showGoldingModal" @close="closeGoldingModal" />
     </template>
+    <p class="content">
+      <span v-if="geolocation" style="color: green"
+        >Votre navigateur supporte la géolocalisation</span
+      >
+      <span v-else style="color: red"
+        >Votre navigateur ne supporte pas la géolocalisation. <br /><strong
+          >Il est impossible d'utiliser l'application...</strong
+        ></span
+      >
+    </p>
   </section>
 </template>
 
 <script>
 import { useResourcesStore } from '../stores/resources';
 import { useUserStore } from '../stores/user';
+import { showAppText } from '../utils/special-log';
 import Map from '../components/Map.vue';
+import VibrationView from "@/views/VibrationView.vue";
 
-const variablePathForCurrentPlayerMock = [
-  { latitude : 45.782092, longitude: 4.866461},
-  { latitude : 45.781879, longitude: 4.866478},
-  { latitude : 45.781640, longitude: 4.866300},
-  { latitude : 45.781400, longitude: 4.865013},
-  { latitude : 45.781415, longitude: 4.864520},
-  { latitude : 45.781812, longitude: 4.864820},
-  { latitude : 45.782115, longitude: 4.865394},
-  { latitude : 45.782407, longitude: 4.865887},
-  { latitude : 45.782544, longitude: 4.866438}
-]; // Positions variables pour le joueur courant mockées.
 export default {
   name: 'MyMap',
-  components: { Map },
+  components: { Map, VibrationView },
   data() {
     return {
       count: 0,
       interval: null,
       intervalSecond: null,
+      geolocation: navigator.geolocation,
+      showGoldingModal: false,
+      oldScore: null,
     }
   },
   beforeMount() {
+    // For dope.
+    showAppText();
     //load user
-    useUserStore().loadUser();
+    useUserStore()
+      .loadUser()
+      .then(() => {
+        // get user position with service worker
+        // and update his position in store on sucess.
+        this.getLocation();
+      });
     //load resources
     useResourcesStore().loadResources();
 
     //set Intervall every 5 seconds
     this.interval = setInterval(() => {
-      this.updatePosition(); //Todo : simulation déplacement joueur.
       useResourcesStore().updateResources();
     }, 5000);
 
@@ -57,10 +69,15 @@ export default {
   unmounted() {
     clearInterval(this.interval);
     clearInterval(this.intervalSecond);
+    navigator.geolocation.clearWatch(this.watchId);
+    navigator.vibrate(0);
   },
   computed: {
     isLoading() {
       return useResourcesStore().isLoading || useUserStore().isLoading;
+    },
+    userProfileScore() {
+      return this.getUserProfile().score;
     },
   },
   methods: {
@@ -77,23 +94,72 @@ export default {
       return useResourcesStore().zrr;
     },
     getResourcesForMarkers() {
-      return this.getResources().map(resource => ({
+      return this.getResources().map((resource) => ({
         latitude: resource.position?.latitude,
         longitude: resource.position?.longitude,
         name: resource.name,
         image: resource.image,
         role: resource.role,
         tll: resource.ttl,
-        score: resource.score,
+        score: resource.score
       }));
     },
-    updatePosition() {
-      const position = variablePathForCurrentPlayerMock[this.count]; //Todo : simulation déplacement joueur.
-      useUserStore().updateUserPosition(position);
-      this.count = (this.count + 1) % variablePathForCurrentPlayerMock.length; // boucle sur les positions mockées
+    getLocation() {
+      if ('geolocation' in navigator) {
+        const options = {
+          timeout: 60000 // Délai d'attente d'une minute
+        };
+
+        navigator.geolocation.watchPosition(this.updatePosition, this.positionError, options);
+      } else {
+        this.message = "La Geolocation API n'est pas disponible sur votre navigateur.";
+      }
+    },
+    positionError(error) {
+      if (error.code === error.TIMEOUT) {
+        console.log('La récupération de la position a pris trop de temps. Veuillez réessayer.');
+      } else {
+        console.log('Erreur lors de la récupération de la position : ' + error.message);
+      }
+    },
+    updatePosition(position) {
+      // const position = variablePathForCurrentPlayerMock[this.count] //Todo : simulation déplacement joueur.
+      console.log('Position obtenu.');
+      // this.positionObtained = true
+      console.log(`Coordonnées de ${useUserStore().user.name} \n`, position.coords);
+      const { latitude, longitude } = position.coords;
+      useUserStore().updateUserPosition({ latitude, longitude });
+      // this.count = (this.count + 1) % variablePathForCurrentPlayerMock.length // boucle sur les positions mockées
+    },
+    closeGoldingModal() {
+      this.showGoldingModal = false;
+      navigator.vibrate(0); // arrête la vibration
+    },
+    triggerVibration() {
+      if ("vibrate" in navigator) {
+        // durée de la vibration en millisecondes
+        navigator.vibrate(500);
+        console.log("VIBRATION !!!!")
+      } else {
+        console.log("Vibration API not supported");
+      }
     },
   },
-}
+  watch: {
+    userProfileScore(newValue, oldValue) {
+      if (this.oldScore !== null && newValue > oldValue) {
+        console.log("Le score a augmenté");
+        this.showGoldingModal = true;
+      }
+      this.oldScore = newValue;
+    },
+    showGoldingModal(newValue) {
+      if (newValue) {
+        this.triggerVibration();
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>

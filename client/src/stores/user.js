@@ -43,7 +43,6 @@ export const useUserStore = defineStore({
         this.user.score = currentUser[0].nests + currentUser[0].nuggets;
       } catch (error) {
         this.isError = true;
-        throw error;
         if(error.status === 401){
           useAuthStore().logout();
         }
@@ -62,8 +61,6 @@ export const useUserStore = defineStore({
         const url = `${resourceURL}/api`;
         const body = { position : position};
         await fetchWrapper.put(`${url}/resources/${this.user.name}/position`, body);
-      } catch (error) {
-        throw error;
       } finally {
         this.user.position = position;
       }
