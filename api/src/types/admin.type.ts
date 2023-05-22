@@ -5,3 +5,6 @@ export type AdminRequestPayload = TypedRequestBody<MiddlewarePayload>;
 export type AdminZRRUpdateRequestType = TypedRequestBody<
   MiddlewarePayload & { newPosition: [Coordinates, Coordinates] }
 >;
+export type AdminCreateOneGoldingueRequestType = TypedRequestBody<
+  MiddlewarePayload & { position: Coordinates }
+>;

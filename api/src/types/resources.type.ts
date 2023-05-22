@@ -5,6 +5,7 @@ export enum ResourceRole {
   CHICKEN = 'chicken',
   GOLDINGUE = 'goldingue',
   NEST = 'nest',
+  NUGGETS = 'nuggets',
 }
 
 export type Coordinates = {
@@ -19,6 +20,7 @@ export type Resource = {
   ttl: number;
   nuggets: number;
   nests: number;
+  dateCreation: number;
 };
 
 export type ResourcesStore = Resource[];

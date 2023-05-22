@@ -8,7 +8,7 @@ import { signInUser } from '../../utils';
 const app = express();
 app.use(express.json());
 app.use('/admin', admin);
-const server = app.listen(3001);
+const server = app.listen(3429);
 
 describe('PUT /admin/zrr', () => {
   let adminToken: string;
@@ -67,8 +67,8 @@ describe('PUT /admin/zrr', () => {
       status: 200,
       message: [
         { latitude: 45.512453, longitude: 4.912279 },
-        { latitude: 45.510417, longitude: 4.914461 },
         { latitude: 45.512453, longitude: 4.914461 },
+        { latitude: 45.510417, longitude: 4.914461 },
         { latitude: 45.510417, longitude: 4.912279 },
       ],
     };

@@ -4,6 +4,7 @@ import java.util.Set;
 
 import javax.naming.NameAlreadyBoundException;
 
+import fr.univlyon1.m1if.m1if13.dto.model.user.UserInfoDto;
 import fr.univlyon1.m1if.m1if13.dto.model.user.UserPasswordDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -72,6 +73,28 @@ public class UsersController {
     return passwordUpdateHandler(login, userDto);
   }
 
+  @Operation(summary = "Update user info",
+          description = "Update user's infos")
+  @ApiResponses(value = {
+          @ApiResponse(responseCode = "204", description = "User's updated", content = @Content),
+          @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+  })
+  @CrossOrigin(origins = {     "http://localhost:8080",
+          "http://localhost:3000",
+          "http://localhost:3003",
+          "http://localhost:3376",
+          "http://192.168.75.14",
+          "https://192.168.75.14"})
+  @PutMapping(path = "/users/infos/{login}", consumes = {
+          MediaType.APPLICATION_JSON_VALUE,
+          MediaType.APPLICATION_XML_VALUE })
+  public ResponseEntity<?> updateUser(
+          final @PathVariable String login,
+          @Parameter(description = "The user object that map the request payload", required = true)
+          final @RequestBody UserInfoDto userDto) {
+    return updateUserAllHandler(login, userDto);
+  }
+
   @Operation(summary = "Create user",
           description = "Create the user with the login in parameter .")
   @ApiResponses(value = {
@@ -125,6 +148,7 @@ public class UsersController {
   })
   @CrossOrigin(origins = {     "http://localhost:8080",
                                  "http://localhost:3000",
+                                 "http://localhost:3003",
                                  "http://localhost:3376",
                                  "http://192.168.75.14",
                                  "https://192.168.75.14"})
@@ -165,6 +189,19 @@ public class UsersController {
     } catch (Exception e) {
       throw new ResponseStatusException(
           HttpStatus.BAD_REQUEST, "Failed to update Password", e);
+    }
+  }
+
+  private ResponseEntity<?> updateUserAllHandler(final String login, final UserInfoDto userDto) {
+    try {
+      userService.changeInfos(login, userDto);
+      return new ResponseEntity<>("Infos updated successfully", HttpStatus.NO_CONTENT);
+    } catch (UserNotFoundException e) {
+      throw new ResponseStatusException(
+              HttpStatus.NOT_FOUND, "User Not Found");
+    } catch (Exception e) {
+      throw new ResponseStatusException(
+              HttpStatus.BAD_REQUEST, "Failed to update User", e);
     }
   }
 }

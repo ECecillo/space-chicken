@@ -10,7 +10,7 @@ import { signInUser } from '../../utils';
 const app = express();
 app.use(express.json());
 app.use('/api/resources', router);
-const server = app.listen(3001);
+const server = app.listen(3343);
 
 const createResource = resourceFactory(resources);
 
@@ -76,8 +76,9 @@ describe('POST /api/resources/:id', () => {
   });
 
   test('returns a 400 status code and error message when an invalid operation type is provided', async () => {
+    const goldingueToUpdate = 'goldingue2';
     const response = await request(app)
-      .post('/api/resources/goldingue0')
+      .post(`/api/resources/${goldingueToUpdate}`)
       .send({
         operationType: 'invalid operation',
       })
@@ -89,8 +90,15 @@ describe('POST /api/resources/:id', () => {
   });
 
   test('returns a 400 status code and error message when operation type doesnt match user role (CHICKEN)', async () => {
+    const goldingueId = 'GOLDINGUE_ID';
+    await createResource({
+      id: goldingueId,
+      role: ResourceRole.GOLDINGUE,
+      ttl: 60,
+      position: { latitude: 45.78205707337908, longitude: 4.864875376224519 },
+    });
     const response = await request(app)
-      .post('/api/resources/goldingue0')
+      .post(`/api/resources/${goldingueId}`)
       .send({
         operationType: 'grab gold nugget',
       })
@@ -102,8 +110,9 @@ describe('POST /api/resources/:id', () => {
   });
 
   test('returns a 400 status code and error message when operation type doesnt match user role (COWBOY)', async () => {
+    const goldingueToUpdate = 'goldingue4';
     const response = await request(app)
-      .post('/api/resources/goldingue0')
+      .post(`/api/resources/${goldingueToUpdate}`)
       .send({
         operationType: 'build nest',
       })
@@ -115,8 +124,9 @@ describe('POST /api/resources/:id', () => {
   });
 
   test('returns a 401 status code and error message when user token not valid', async () => {
+    const goldingueToUpdate = 'goldingue5';
     const response = await request(app)
-      .post('/api/resources/goldingue0')
+      .post(`/api/resources/${goldingueToUpdate}`)
       .send({
         operationType: 'build nest',
       })
@@ -124,7 +134,7 @@ describe('POST /api/resources/:id', () => {
       .set('Authorization', `Bearer invalid-token`)
       .expect(401);
 
-    expect(response.text).toEqual('User authentication failed');
+    expect(response.text).toEqual('User authentication failed or expired');
   });
 
   test('returns a 404 status code and error message when the resource is not found', async () => {
