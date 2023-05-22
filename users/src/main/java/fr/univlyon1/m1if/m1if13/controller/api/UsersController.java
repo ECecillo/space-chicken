@@ -81,6 +81,7 @@ public class UsersController {
   })
   @CrossOrigin(origins = {     "http://localhost:8080",
           "http://localhost:3000",
+          "http://localhost:3003",
           "http://localhost:3376",
           "http://192.168.75.14",
           "https://192.168.75.14"})
@@ -147,6 +148,7 @@ public class UsersController {
   })
   @CrossOrigin(origins = {     "http://localhost:8080",
                                  "http://localhost:3000",
+                                 "http://localhost:3003",
                                  "http://localhost:3376",
                                  "http://192.168.75.14",
                                  "https://192.168.75.14"})

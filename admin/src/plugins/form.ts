@@ -2,7 +2,8 @@ import { Map } from 'leaflet';
 
 import { getAppConfig } from '../get-app-config.ts';
 import { getAppResources } from '../get-app-resources.ts';
-import { newCoordinates } from '../types/resources';
+import { Coordinate, newCoordinates } from '../types/resources';
+import { updateGoldingueRequest } from '../update-one-goldingue-request';
 import { updateTTLRequest } from '../update-ttl-request.ts';
 import { updateZRRRequest } from '../update-zrr-request.ts';
 import {
@@ -21,9 +22,13 @@ function updateMapByForm() {
   const currentLatitude = getHTMLInputElementValue('currentLatitude');
   const currentLongitude = getHTMLInputElementValue('currentLongitude');
   const zoom = getHTMLInputElementValue('zoom');
-  updateMap([currentLatitude, currentLongitude], zoom);
+  updateMap([Number(currentLatitude), Number(currentLongitude)], Number(zoom));
 }
 
+function setGolingue(latitude, longitude) {
+  setHTMLInputElementValue('goldingueLatitude', latitude);
+  setHTMLInputElementValue('goldingueLongitude', longitude);
+}
 function setZrr(northWest, southEast) {
   setHTMLInputElementValue('northWestLatitude', northWest.lat);
   setHTMLInputElementValue('northWestLongitude', northWest.lng);
@@ -47,23 +52,58 @@ async function sendZrr() {
   ) {
     // Afficher une erreur si une des variables n'est pas un nombre à virgule flottante
     alert('Veuillez entrer des nombres pour les coordonnées.');
+  } else if (
+    southEastLongitude === '' ||
+    southEastLatitude === '' ||
+    northWestLongitude === '' ||
+    northWestLatitude === ''
+  ) {
+    alert('Vous devez entrer des coordonnées pour la zrr');
+  } else {
+    const positionPayload: newCoordinates = [
+      {
+        latitude: parseFloat(northWestLatitude),
+        longitude: parseFloat(northWestLongitude),
+      },
+      {
+        latitude: parseFloat(southEastLatitude),
+        longitude: parseFloat(southEastLongitude),
+      },
+    ];
+    try {
+      await updateZRRRequest({ token }, { newPosition: positionPayload });
+      updateMarkerZRR();
+    } catch (error) {
+      console.log(
+        `erreur lors de la mise à jour de la zrr ${error}`,
+        'alert-danger',
+      );
+    }
   }
+}
 
-  const positionPayload: newCoordinates = [
-    {
-      latitude: parseFloat(northWestLatitude),
-      longitude: parseFloat(northWestLongitude),
-    },
-    {
-      latitude: parseFloat(southEastLatitude),
-      longitude: parseFloat(southEastLongitude),
-    },
-  ];
-  try {
-    await updateZRRRequest({ token }, { newPosition: positionPayload });
-    updateMarkerZRR();
-  } catch (error) {
-    console.log(`erreur lors de la mise à jour de la zrr ${error}`, 'alert-danger');
+async function sendGoldingue() {
+  const goldingueLatitude = getHTMLInputElementValue('goldingueLatitude');
+  const goldingueLongitude = getHTMLInputElementValue('goldingueLongitude');
+
+  if (Number.isNaN(goldingueLatitude) || Number.isNaN(goldingueLongitude)) {
+    // Afficher une erreur si une des variables n'est pas un nombre à virgule flottante
+    alert('Veuillez entrer des nombres pour les coordonnées.');
+  } else if (goldingueLatitude === '' || goldingueLongitude === '')
+    alert('Vous devez entrer des coordonnées pour la goldingue');
+  else {
+    const position: Coordinate = {
+      latitude: parseFloat(goldingueLatitude),
+      longitude: parseFloat(goldingueLongitude),
+    };
+    try {
+      await updateGoldingueRequest({ token }, position);
+    } catch (error) {
+      console.log(
+        `erreur lors de la création du goldingue ${error}`,
+        'alert-danger',
+      );
+    }
   }
 }
 
@@ -105,11 +145,21 @@ function initListeners(map: Map) {
     setZrr(northWest, southEast);
   });
 
+  document.getElementById('setGoldingueButton').addEventListener('click', () => {
+    // Récupère les coordonnées du click sur la carte
+    const click = map.getCenter();
+
+    setGolingue(click.lat, click.lng);
+  });
+  document.getElementById('setTtlButton').addEventListener('click', () => setTtl());
+
   document
     .getElementById('sendZrrButton')
     .addEventListener('click', () => sendZrr());
 
-  document.getElementById('setTtlButton').addEventListener('click', () => setTtl());
+  document
+    .getElementById('sendOneGoldingueButton')
+    .addEventListener('click', () => sendGoldingue());
 }
 
 async function getZRRandTTL() {

@@ -22,8 +22,8 @@ export default function getRectangleGPSPoints(
 
   return [
     coordinateCornerA,
-    coordinateCornerC,
     coordinateCornerB,
+    coordinateCornerC,
     coordinateCornerD,
   ];
 }

@@ -5,7 +5,7 @@
     <div v-else-if="isError()">Error, please reload page or contact dev</div>
     <template v-else>
       <h4> SCORE ACTUEL : {{ getUserProfile().score }}</h4>
-      <Map :markers="getMarkers()" :zrr="getZrr()" :user="getUserProfile()"/>
+      <Map :resources="getResourcesForMarkers()" :zrr="getZrr()" :user="getUserProfile()"/>
     </template>
   </section>
 </template>
@@ -33,6 +33,7 @@ export default {
     return {
       count: 0,
       interval: null,
+      intervalSecond: null,
     }
   },
   beforeMount() {
@@ -43,12 +44,19 @@ export default {
 
     //set Intervall every 5 seconds
     this.interval = setInterval(() => {
-      this.updatePosition();
+      this.updatePosition(); //Todo : simulation déplacement joueur.
       useResourcesStore().updateResources();
     }, 5000);
+
+    //set Intervall every 1 seconds
+    this.intervalSecond = setInterval(() => {
+      console.log('update ttl');
+      useResourcesStore().updateTTL();
+    }, 1000);
   },
   unmounted() {
     clearInterval(this.interval);
+    clearInterval(this.intervalSecond);
   },
   computed: {
     isLoading() {
@@ -68,7 +76,7 @@ export default {
     getZrr() {
       return useResourcesStore().zrr;
     },
-    getMarkers() {
+    getResourcesForMarkers() {
       return this.getResources().map(resource => ({
         latitude: resource.position?.latitude,
         longitude: resource.position?.longitude,
@@ -80,7 +88,7 @@ export default {
       }));
     },
     updatePosition() {
-      const position = variablePathForCurrentPlayerMock[this.count];
+      const position = variablePathForCurrentPlayerMock[this.count]; //Todo : simulation déplacement joueur.
       useUserStore().updateUserPosition(position);
       this.count = (this.count + 1) % variablePathForCurrentPlayerMock.length; // boucle sur les positions mockées
     },

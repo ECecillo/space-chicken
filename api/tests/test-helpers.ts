@@ -7,13 +7,14 @@ import { Resource, ResourceRole, ResourcesStore } from '../src/types/resources.t
  */
 export function resourceFactory(resources: ResourcesStore) {
   async function prepapreResource(inputResource: Partial<Resource>) {
-    const role = inputResource.role || ResourceRole.GOLDINGUE;
-    const id = inputResource.id || `Resource_ID_${role}`;
-    const nests = inputResource.nests || 0;
-    const nuggets = inputResource.nuggets || 0;
-    const ttl = inputResource.ttl !== undefined ? inputResource.ttl : 60; // check undefined because if passing 0 automatically use default value 60.
-    const position = inputResource.position || { longitude: 45.2163, latitude: 4.5 };
+    const role = inputResource.role ?? ResourceRole.GOLDINGUE;
+    const id = inputResource.id ?? `Resource_ID_${role}`;
+    const nests = inputResource.nests ?? 0;
+    const nuggets = inputResource.nuggets ?? 0;
+    const ttl = inputResource.ttl ?? 60;
+    const position = inputResource.position ?? { longitude: 45.2163, latitude: 4.5 };
     return {
+      dateCreation: Date.now(),
       id,
       role,
       nests,

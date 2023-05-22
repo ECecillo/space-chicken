@@ -31,7 +31,7 @@ export const useResourcesStore = defineStore({
           if(resource.role === 'goldingue' && resource.ttl <= 0){
             return false;
           }
-          if((resource.id === localStorage.getItem('login').toString().slice(1, -1))) {
+          if((resource.id === localStorage.getItem('login'))) {
             return false;
           }
           return true;
@@ -82,6 +82,7 @@ export const useResourcesStore = defineStore({
         }
         throw error;
       } finally {
+        console.log(this.resources)
         this.isLoading = false;
         this.isError = false;
       }
@@ -120,6 +121,13 @@ export const useResourcesStore = defineStore({
       } finally {
         await this.loadResources();
       }
+    },
+    updateTTL() {
+      this.resources.forEach((resource) => {
+        if (resource.ttl > 0){
+          resource.ttl --;
+        }
+      });
     },
   }
 });

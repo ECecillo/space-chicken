@@ -8,7 +8,7 @@ import { signInUser } from '../../utils';
 const app = express();
 app.use(express.json());
 app.use('/admin', admin);
-const server = app.listen(3001);
+const server = app.listen(5382);
 
 describe('GET /admin', () => {
   let adminToken: string;

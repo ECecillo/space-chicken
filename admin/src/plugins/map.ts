@@ -3,18 +3,23 @@ import {
     icon, LatLngBoundsLiteral, layerGroup, map as leafletMap, marker as leafletMarker, tileLayer
 } from 'leaflet';
 
+import 'leaflet/dist/leaflet.css';
 import chicken from '../img/chicken.png';
 import cowboy from '../img/cowboy.png';
 import goldingue from '../img/goldingue.png';
+import nest from '../img/nest.png';
+import nuggets from '../img/nuggets.png';
 import { getResources, getZRRandTTL, setHTMLInputElementValue } from './form';
 
 // const lat = 45.782; const lng = 4.8656; const zoom = 19;
 
 // decalaration des icons de la carte
 const icons = {
-  chicken: icon({ iconUrl: chicken, iconSize: [50, 50] }),
-  'cow-boy': icon({ iconUrl: cowboy, iconSize: [50, 50] }),
-  goldingue: icon({ iconUrl: goldingue, iconSize: [50, 50] }),
+  'chicken': icon({ iconUrl: chicken, iconSize: [30, 30] }),
+  'cow-boy': icon({ iconUrl: cowboy, iconSize: [30, 30] }),
+  'goldingue': icon({ iconUrl: goldingue, iconSize: [30, 30] }),
+  'nest': icon({ iconUrl: nest, iconSize: [30, 30] }),
+  'nuggets': icon({ iconUrl: nuggets, iconSize: [30, 30] }),
 };
 
 // récuperation des ressources initiales du jeu
@@ -40,6 +45,7 @@ const map = leafletMap('map');
 
 // Créer une instance de LayerGroup() pour stocker les markers
 const markersLayer = layerGroup().addTo(map);
+const currentClickLayer = layerGroup().addTo(map);
 const zrrLayer = layerGroup().addTo(map);
 
 // Mise à jour de la map
@@ -60,16 +66,29 @@ function updateMarkerZRR() {
   zrrLayer.addLayer(marker);
 }
 function createMapResources(allResources) {
+
   // Parcourir la liste des ressources et ajouter un marqueur pour chaque ressource
   allResources.forEach((resource) => {
+    const score = resource.nests + resource.nuggets;
+    let info = '';
+    if(resource.role === 'goldingue') {
+      info = `<div>TTL : ${resource.ttl} </div>`
+    }
+    if(resource.role === 'chicken' || resource.role === 'cow-boy') {
+      info = `<div>Name : ${resource.id} </div>
+                <div>Role : ${resource.role} </div>
+                <div>Score : ${score} </div> `
+    }
+    if (resource.role === 'nest' || resource.role === 'nuggets') {
+      info = `<div>Ressource capturée.</div>`
+    }
     // Créer un marqueur avec l'icône correspondant au rôle de la ressource
-    const marker = leafletMarker(
-      [resource.position.latitude, resource.position.longitude],
-      { icon: icons[resource.role] },
-    )
-      .addTo(map)
-      .bindTooltip(resource.id, { direction: 'top' });
-    markersLayer.addLayer(marker);
+    markersLayer.addLayer(
+      leafletMarker(
+        [resource.position.latitude, resource.position.longitude],
+        { icon: icons[resource.role] },
+      ).addTo(map).bindPopup(info)
+    );
   });
 }
 
@@ -116,6 +135,8 @@ function initMap() {
     setHTMLInputElementValue('currentLatitude', e.latlng.lat.toString());
     setHTMLInputElementValue('currentLongitude', e.latlng.lng.toString());
     setHTMLInputElementValue('zoom', map.getZoom().toString());
+    currentClickLayer.clearLayers();
+    currentClickLayer.addLayer(leafletMarker([e.latlng.lat, e.latlng.lng]).addTo(map));
   });
 
   const actionOnMap = ['dragend', 'zoomend'];
