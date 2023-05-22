@@ -27,7 +27,7 @@ export const useUserStore = defineStore({
       try {
         this.isLoading = true;
         const resourcesResponse = await fetchWrapper.get(`${url}/resources`, body);
-        const currentUserLogin = localStorage.getItem('login').toString().slice(1, -1);
+        const currentUserLogin = localStorage.getItem('login');
 
         const currentUser = JSON.parse(JSON.stringify(resourcesResponse)).filter((resource) => {
             return resource.id === currentUserLogin;
@@ -74,7 +74,7 @@ export const useUserStore = defineStore({
 
       try {
         const resourcesResponse = await fetchWrapper.get(`${url}/resources`, body);
-        const currentUserLogin = localStorage.getItem('login').toString().slice(1, -1);
+        const currentUserLogin = localStorage.getItem('login');
 
         const currentUser = JSON.parse(JSON.stringify(resourcesResponse)).filter((resource) => {
             return resource.id === currentUserLogin;

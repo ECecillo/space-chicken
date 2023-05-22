@@ -20,6 +20,7 @@ export type Resource = {
   ttl: number;
   nuggets: number;
   nests: number;
+  dateCreation: number;
 };
 
 export type ResourcesStore = Resource[];
