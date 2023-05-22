@@ -1,7 +1,18 @@
 /* eslint-disable no-loss-of-precision */
 import { ResourceRole, ResourcesStore } from '../types/resources.type';
 
+const startDate = Date.now();
+
 const resources: ResourcesStore = [
+  {
+    id: 'admin',
+    position: { latitude: 45.78205707337908, longitude: 4.864875376224519 },
+    role: ResourceRole.CHICKEN,
+    ttl: 0,
+    nuggets: 0,
+    nests: 0,
+    dateCreation: startDate,
+  },
   {
     id: 'ECecillo',
     position: { latitude: 45.78205707337908, longitude: 4.864875376224519 },
@@ -9,6 +20,7 @@ const resources: ResourcesStore = [
     ttl: 0,
     nuggets: 0,
     nests: 0,
+    dateCreation: startDate,
   },
   {
     id: 'John',
@@ -16,7 +28,8 @@ const resources: ResourcesStore = [
     role: ResourceRole.CHICKEN,
     ttl: 0,
     nuggets: 0,
-    nests: 0,
+    nests: 1,
+    dateCreation: startDate,
   },
   {
     id: 'Elfenwaar',
@@ -25,46 +38,79 @@ const resources: ResourcesStore = [
     ttl: 0,
     nuggets: 0,
     nests: 0,
+    dateCreation: startDate,
   },
   {
     id: 'Melp',
     position: { latitude: 45.78221606944465, longitude: 4.866321086883546 },
     role: ResourceRole.COWBOY,
     ttl: 0,
-    nuggets: 0,
+    nuggets: 2,
     nests: 0,
+    dateCreation: startDate,
   },
   {
     id: 'goldingue0',
     position: { latitude: 45.78183260757347, longitude: 4.8660072684288025 },
     role: ResourceRole.GOLDINGUE,
-    ttl: 60,
+    ttl: 3000,
     nuggets: 0,
     nests: 0,
+    dateCreation: startDate,
   },
   {
     id: 'goldingue1',
     position: { latitude: 45.78189996933055, longitude: 4.866418987512589 },
     role: ResourceRole.GOLDINGUE,
-    ttl: 60,
+    ttl: 3000,
     nuggets: 0,
     nests: 0,
+    dateCreation: startDate,
   },
   {
     id: 'goldingue2',
     position: { latitude: 45.78188591828415, longitude: 4.865323305130006 },
     role: ResourceRole.GOLDINGUE,
-    ttl: 60,
+    ttl: 300,
     nuggets: 0,
     nests: 0,
+    dateCreation: startDate,
   },
   {
     id: 'goldingue3',
-    position: { latitude: 45.781740015165354, longitude: 4.865717589855195 },
-    role: ResourceRole.GOLDINGUE,
-    ttl: 60,
+    position: { latitude: 45.782171, longitude: 4.86541 },
+    role: ResourceRole.NEST,
+    ttl: 0,
     nuggets: 0,
     nests: 0,
+    dateCreation: startDate,
+  },
+  {
+    id: 'goldingue6',
+    position: { latitude: 45.781740015165354, longitude: 4.865717589855195 },
+    role: ResourceRole.NEST,
+    ttl: 0,
+    nuggets: 0,
+    nests: 0,
+    dateCreation: startDate,
+  },
+  {
+    id: 'goldingue4',
+    position: { latitude: 45.782406, longitude: 4.866865 },
+    role: ResourceRole.GOLDINGUE,
+    ttl: 15,
+    nuggets: 0,
+    nests: 0,
+    dateCreation: startDate,
+  },
+  {
+    id: 'goldingue5',
+    position: { latitude: 45.781915, longitude: 4.86444 },
+    role: ResourceRole.NUGGETS,
+    ttl: 0,
+    nuggets: 0,
+    nests: 0,
+    dateCreation: startDate,
   },
 ];
 

@@ -21,7 +21,7 @@ export const checkTokenMiddleware = async (
     req.headers.authorization && extractBearerToken(req.headers.authorization);
 
   // Présence d'un token
-  if (!token) return res.status(401).send('User authentication failed');
+  if (!token) return res.status(401).send('Missing token');
 
   // Véracité du token
   // Remplacer par la requête vers /authenticate
@@ -37,7 +37,7 @@ export const checkTokenMiddleware = async (
     const { response } = err as AxiosError;
     if (response?.status === 400) return res.status(400).send('Missing parameters');
     if (response?.status === 401)
-      return res.status(401).send('User authentication failed');
-    return res.status(501).send('Not implemented handler');
+      return res.status(401).send('User authentication failed or expired');
+    return res.status(501).send(err.message);
   }
 };
