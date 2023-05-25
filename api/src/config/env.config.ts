@@ -7,6 +7,6 @@ const rootUrl =
     ? process.env.SPRING_SERVER
     : process.env.LOCAL;
 
-const serverPort = process.env.EXPRESS_PORT || 3000;
+const serverPort = process.env.EXPRESS_PORT || 3376;
 
 export { rootUrl, serverPort };
