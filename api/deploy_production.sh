@@ -1,6 +1,5 @@
 echo "EXPRESS_PORT=$EXPRESS_PORT" > .env \
   &&  echo "NODE_ENV=$NODE_ENV" >> .env \
-  &&  echo "LOCAL=http://localhost:8080" >> .env \
   &&  echo "SPRING_SERVER=$SPRING_SERVER" >> .env \
   &&  cat .env \
   &&  npm install --include=dev \
