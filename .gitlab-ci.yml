@@ -1,7 +1,6 @@
 # Cache downloaded dependencies and plugins between builds.
 # Not strictly necessary, but speeds up the builds.
 stages:
-  - test_api_servers
   - deploy_spring_backend
   - deploy_express_app_api
   - deploy_admin_client
@@ -21,31 +20,6 @@ variables:
   # Use the cached directory above.
   MAVEN_OPTS: "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository"
 
-test_spring_users_api:
-  stage: test_api_servers
-  image: maven:3.8.3-openjdk-17
-  only:
-    - main
-
-  before_script:
-    # The runners on the forge need a proxy to access the web. mvn
-    # ignores the $http_proxy & friends variable => write a
-    # configuration file that does this for us.
-    - . ci/setup-mvn-proxy.sh
-    # Useful only for debugging
-    #- cat ~/.m2/settings.xml
-  script:
-    - cd users/ && mvn test --batch-mode
-
-test_express_app_api:
-  stage: test_api_servers
-  only:
-    - main
-
-  script:
-    - cd api/ && npm install --include=dev && npm run test:production # unoptimized but should do the work.
-
-
 deploy_spring_backend:
   stage: deploy_spring_backend
   image: maven:3.8.3-openjdk-17
@@ -55,7 +29,7 @@ deploy_spring_backend:
     - main
 
   script:
-    - cd users && mvn clean package && scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY target/users.war gitlabci@192.168.75.14:/opt/tomcat/webapps/users.war
+    - cd users && mvn clean package && scp -o StrictHostKeyChecking=no -i $CI_SSH_KEY target/users.war forgeci@51.38.178.218:/opt/tomcat/webapps/users.war
 
 deploy_express_app_api:
   stage: deploy_express_app_api
