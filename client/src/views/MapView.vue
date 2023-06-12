@@ -2,7 +2,7 @@
   <section>
     <h2>Carte</h2>
     <div v-if="isLoading">Loading...</div>
-    <div v-else-if="isError()">Error, please reload page or contact dev</div>
+    <div v-else-if="showError" style="color: red">Error, please reload page or contact the dev team</div>
     <template v-else>
       <h4>SCORE ACTUEL : {{ getUserProfile().score }}</h4>
       <Map :resources="getResourcesForMarkers()" :zrr="getZrr()" :user="getUserProfile()" />
@@ -39,9 +39,10 @@ export default {
       geolocation: navigator.geolocation,
       showGoldingModal: false,
       oldScore: null,
+      showError: true,
     }
   },
-  beforeMount() {
+  async beforeMount() {
     // For dope.
     showAppText();
     //load user
@@ -52,8 +53,15 @@ export default {
         // and update his position in store on sucess.
         this.getLocation();
       });
-    //load resources
-    useResourcesStore().loadResources();
+    //load resources and check if API is UP.
+    try {
+      await useResourcesStore().loadResources()
+      this.showError = false;
+    }
+    catch(error) {
+      // Otherwise show error message.
+      this.showError = true;
+    }
 
     //set Intervall every 5 seconds
     this.interval = setInterval(() => {
@@ -88,7 +96,7 @@ export default {
       return useUserStore().user;
     },
     isError() {
-      return useResourcesStore().isError || useUserStore().isError;
+      this.showError = useResourcesStore().isError || useUserStore().isError;
     },
     getZrr() {
       return useResourcesStore().zrr;

@@ -73,10 +73,11 @@ export const useResourcesStore = defineStore({
             this.resources[index]['image'] = response.image || 'https://www.referenseo.com/wp-content/uploads/2019/03/image-attractive.jpg'
           });
         } catch (error) {
+          this.isError = true;
           console.error(error);
         }
       } catch (error) {
-        this.isError = true;
+        this.isLoading = true;
         if(error.status === 401){
           useAuthStore().logout();
         }
@@ -108,6 +109,17 @@ export const useResourcesStore = defineStore({
           }
           promisesUpdateResources.push(fetchWrapper.post(`${resourceURL}/api/resources/${resource.name}`, body));
           hasCaptured = true;
+          if (!("Notification" in window)) {
+            console.error("Ce navigateur ne supporte pas les notifications de bureau");
+          } else if (Notification.permission === "granted") {
+            new Notification("🐔 Space Chicken attacks!", {body : "You grab a goldingue, nice job !"});
+          } else if (Notification.permission !== "denied") {
+            Notification.requestPermission().then(function (permission) {
+              if (permission === "granted") {
+                new Notification("🐔 Space Chicken attacks!", {body : "You grab a goldingue, nice job !"});
+              }
+            });
+          }
         }
       });
       const allPromiseReloadResources = Promise.all(promisesUpdateResources);
@@ -117,6 +129,7 @@ export const useResourcesStore = defineStore({
           await useUserStore().refreshUser();
         }
       } catch (error) {
+        this.isError = true;
         console.error(error);
       } finally {
         await this.loadResources();
