@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue';
 import MapView from '../views/MapView.vue';
 import LoginView from '../views/LoginView.vue';
 import ProfileView from '../views/ProfileView.vue';
+import GeolocView from '../views/GeolocView.vue'
 
 export const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +29,12 @@ export const router = createRouter({
       path: '/profile',
       name: 'profile',
       component: ProfileView
+    },
+    {
+      path: '/geoloc',
+      name: 'geoloc',
+      component: GeolocView
+
     }
   ]
 });

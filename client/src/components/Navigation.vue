@@ -7,6 +7,7 @@
         <RouterLink to="/" class="nav-item nav-link">Home</RouterLink>
         <RouterLink to="/map" class="nav-item nav-link">My map</RouterLink>
         <RouterLink to="/profile" class="nav-item nav-link">Profile</RouterLink>
+        <RouterLink to="/geoloc" class="nav-item nav-link">Geoloc</RouterLink>
         <a @click="logout()" href="/login" class="nav-item nav-link">Logout</a>
       </nav>
     </div>
@@ -14,20 +15,22 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
 import { useAuthStore } from '../stores/authentification';
 
 export default {
-  name: "Navigation",
-  props: {
-    user: {
-      type: String,
-    }
-  },
-  methods: {
-    logout() {
-      useAuthStore().logout();
-    }
-  }
+    name: "Navigation",
+    props: {
+        user: {
+            type: String,
+        }
+    },
+    methods: {
+        logout() {
+            useAuthStore().logout();
+        }
+    },
+    components: { RouterLink }
 }
 </script>
 
