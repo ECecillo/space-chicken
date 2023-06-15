@@ -83,8 +83,8 @@ public class UsersController {
           "http://localhost:3000",
           "http://localhost:3003",
           "http://localhost:3376",
-          "http://192.168.75.14",
-          "https://192.168.75.14"})
+          "http://51.38.178.218",
+          "https://51.38.178.218"})
   @PutMapping(path = "/users/infos/{login}", consumes = {
           MediaType.APPLICATION_JSON_VALUE,
           MediaType.APPLICATION_XML_VALUE })
@@ -150,8 +150,8 @@ public class UsersController {
                                  "http://localhost:3000",
                                  "http://localhost:3003",
                                  "http://localhost:3376",
-                                 "http://192.168.75.14",
-                                 "https://192.168.75.14"})
+                                 "http://51.38.178.218",
+                                 "https://51.38.178.218"})
   @GetMapping(path = "/users/{login}")
   public ResponseEntity<User> getUser(
   final @PathVariable String login) {

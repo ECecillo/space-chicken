@@ -4372,7 +4372,7 @@
 		},
 		{
 			"key": "vmURL",
-			"value": "https://192.168.75.14:8443/users",
+			"value": "https://51.38.178.218:8443/users",
 			"type": "string"
 		},
 		{

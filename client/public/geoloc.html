@@ -1,0 +1,53 @@
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Geolocation</title>
+</head>
+<body>
+<div id="geolocation-container">
+    <p id="message">Récupération de la position en cours...</p>
+    <div id="position-data" style="display: none;">
+        <p>Latitude : <span id="latitude"></span></p>
+        <p>Longitude : <span id="longitude"></span></p>
+    </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const messageElement = document.getElementById('message');
+    const positionDataElement = document.getElementById('position-data');
+    const latitudeElement = document.getElementById('latitude');
+    const longitudeElement = document.getElementById('longitude');
+
+    function getLocation() {
+      if ("geolocation" in navigator) {
+        const options = {
+          timeout: 60000, // Délai d'attente d'une minute
+        };
+
+        navigator.geolocation.watchPosition(positionUpdate, positionError, options);
+      } else {
+        messageElement.textContent = "La Geolocation API n'est pas disponible sur votre navigateur.";
+      }
+    }
+
+    function positionUpdate(position) {
+      messageElement.textContent = "Position obtenue.";
+      positionDataElement.style.display = "block";
+      latitudeElement.textContent = position.coords.latitude;
+      longitudeElement.textContent = position.coords.longitude;
+    }
+
+    function positionError(error) {
+      if (error.code === error.TIMEOUT) {
+        messageElement.textContent = "La récupération de la position a pris trop de temps. Veuillez réessayer.";
+      } else {
+        messageElement.textContent = "Erreur lors de la récupération de la position : " + error.message;
+      }
+    }
+
+    getLocation();
+  });
+</script>
+</body>
+</html>
