@@ -1,11 +1,4 @@
 # M1if13 2023
- 
-# ⚠️
-### Cette version de l'application n'est pas celle deployée et finale.
-### Seuls les tests peuvent être lancés ici, ils correspondent à la VF.
-### Pour visiter le dépôt de la prod : https://gitlab.com/romane.ldru/mif13
-# ⚠️
- 
 
 ## TP1 & TP2 : framework côté serveur (Spring Boot)
 
