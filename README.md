@@ -17,3 +17,31 @@
 
 ## TP8 : PWA
 La PWA est installable sur la version en ligne https://space-chicken.games, sur navigateur ou mobile.
+
+# Partie TEST ET DEV
+
+1. Cloner le dépôt
+
+### Partie Spring : 
+> cd users
+> mvn spring-boot:run
+
+### Partie VueJs (client) :
+> cd client
+> npm install
+> npm run dev
+
+### Partie NodeJs (API) :
+> cd api
+> npm install
+> npm run dev
+
+### Partie Admin : 
+> cd admin
+> npm install
+> npm run build
+> npm run serve
+
+
+Les .env ont été ajoutés pour faciliter le lancement des applications en mode développement (pour l'évaluation).
+Ce n'est pas une bonne pratique, normalement ces valeurs doivent être fournies dans un vault.
