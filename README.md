@@ -24,22 +24,32 @@ La PWA est installable sur la version en ligne https://space-chicken.games, sur 
 
 ### Partie Spring : 
 > cd users
+
 > mvn spring-boot:run
 
 ### Partie VueJs (client) :
 > cd client
+
 > npm install
+
+> npm run build
+
 > npm run dev
 
 ### Partie NodeJs (API) :
 > cd api
+
 > npm install
+
 > npm run dev
 
 ### Partie Admin : 
 > cd admin
+
 > npm install
+
 > npm run build
+
 > npm run serve
 
 
